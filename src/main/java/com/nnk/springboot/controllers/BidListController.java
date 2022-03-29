@@ -1,6 +1,5 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.BidAddDto;
 import com.nnk.springboot.dto.BidUpdateDto;
 import com.nnk.springboot.services.BidListService;
@@ -14,10 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.util.NoSuchElementException;
-import java.util.Optional;
+
 
 
 @Controller
