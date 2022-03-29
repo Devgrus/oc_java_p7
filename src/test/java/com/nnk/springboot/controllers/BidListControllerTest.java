@@ -63,7 +63,7 @@ public class BidListControllerTest {
                         .param("account", "0123456789012345678901234567890")
                         .param("type", "TypeTest")
                         .param("bidQuantity", "5"))
-                .andExpect(model().attributeErrorCount("addBidDto", 1));
+                .andExpect(model().attributeErrorCount("bidAddDto", 1));
     }
 
     @Test
@@ -77,7 +77,7 @@ public class BidListControllerTest {
                         .param("account", "AccountTest")
                         .param("type", "0123456789012345678901234567890")
                         .param("bidQuantity", "5"))
-                .andExpect(model().attributeErrorCount("addBidDto", 1));
+                .andExpect(model().attributeErrorCount("bidAddDto", 1));
     }
 
     @Test
@@ -91,7 +91,7 @@ public class BidListControllerTest {
                         .param("account", "AccountTest")
                         .param("type", "TypeTest")
                         .param("bidQuantity", "aa"))
-                .andExpect(model().attributeErrorCount("addBidDto", 1));
+                .andExpect(model().attributeErrorCount("bidAddDto", 1));
     }
 
     @Test
@@ -179,7 +179,7 @@ public class BidListControllerTest {
                         .param("account", "AccountTest")
                         .param("type", "0123456789012345678901234567890")
                         .param("bidQuantity", "5"))
-                .andExpect(model().attributeErrorCount("addBidDto", 1));
+                .andExpect(model().attributeErrorCount("bidUpdateDto", 1));
     }
 
     @Test
@@ -193,6 +193,6 @@ public class BidListControllerTest {
                         .param("account", "AccountTest")
                         .param("type", "TypeTest")
                         .param("bidQuantity", "aa"))
-                .andExpect(model().attributeErrorCount("addBidDto", 1));
+                .andExpect(model().attributeErrorCount("bidUpdateDto", 1));
     }
 }
