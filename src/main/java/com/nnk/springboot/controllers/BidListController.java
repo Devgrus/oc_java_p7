@@ -45,18 +45,11 @@ public class BidListController {
 
     @PostMapping("/validate")
     public String validate(@Validated BidAddDto bidAddDto, BindingResult result, Model model) {
-        // TODO: check data valid and save to db, after saving return bid list
         if(result.hasErrors()) {
             return "bidList/add";
         }
 
-        BidList bidList = BidList.builder()
-                .account(bidAddDto.getAccount())
-                .type(bidAddDto.getType())
-                .bidQuantity(bidAddDto.getBidQuantity().doubleValue()) // Convert to double
-                .build();
-
-        bidListService.save(bidList);
+        bidListService.save(bidAddDto.toEntity());
         return "redirect:/bidList/list";
     }
 

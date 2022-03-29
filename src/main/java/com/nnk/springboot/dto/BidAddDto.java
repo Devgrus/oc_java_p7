@@ -1,5 +1,6 @@
 package com.nnk.springboot.dto;
 
+import com.nnk.springboot.domain.BidList;
 import lombok.*;
 
 import javax.validation.constraints.*;
@@ -20,4 +21,12 @@ public class BidAddDto {
     @Positive(message = "Bid Quantity must be positive")
     @Digits(integer = 10 , fraction = 2)
     private BigDecimal bidQuantity;
+
+    public BidList toEntity() {
+        return BidList.builder()
+                .account(account)
+                .type(type)
+                .bidQuantity(bidQuantity.doubleValue())
+                .build();
+    }
 }
