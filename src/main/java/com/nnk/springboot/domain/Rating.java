@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+    private Integer id;
 
     @Size(max = 125)
     private String moodysRating;

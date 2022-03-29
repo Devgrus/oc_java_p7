@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.BidAddDto;
+import com.nnk.springboot.dto.BidUpdateDto;
 import com.nnk.springboot.services.BidListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 @Controller
@@ -58,14 +62,28 @@ public class BidListController {
 
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Bid by Id and to model then show to the form
+        try {
+            model.addAttribute("id", id.toString());
+            model.addAttribute("bidUpdateDto", bidListService.getBidUpdateFormData(id));
+        } catch (NoSuchElementException e) {
+            return "redirect:/bidList/list";
+        }
         return "bidList/update";
     }
 
     @PostMapping("/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList,
+    public String updateBid(@PathVariable("id") Integer id, @Validated BidUpdateDto bidUpdateDto,
                             BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Bid and return list Bid
+        if(result.hasErrors()) {
+            return "/bidList/update";
+        }
+
+        try {
+            bidListService.update(id, bidUpdateDto);
+        } catch (NoSuchElementException e) {
+            return "redirect:/bidList/list";
+        }
+
         return "redirect:/bidList/list";
     }
 

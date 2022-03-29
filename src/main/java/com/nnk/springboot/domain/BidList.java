@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 public class BidList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer BidListId;
+    private Integer bidListId;
 
     @NotBlank(message = "Account is mandatory")
     @Size(max = 30)

@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
 public class RuleName {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+    private Integer id;
 
     @Size(max = 125)
     private String name;
