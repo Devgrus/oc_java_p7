@@ -28,16 +28,25 @@
 		<a href="/bidList/add" class="btn btn-primary btn-sm">Add New</a>
 		<table class="table table-bordered">
 			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Account</th>
-					<th>Type</th>
-					<th>Bid Quantity</th>
-					<th>Action</th>
+				<tr class="d-flex">
+					<th class="col-1">Id</th>
+					<th class="col-3">Account</th>
+					<th class="col-3">Type</th>
+					<th class="col-3">Bid Quantity</th>
+					<th class="col-2">Action</th>
 				</tr>
 			</thead>
 			<tbody>
-				<!-- TODO: Show all Bids to the table, the Action column will have Edit & Delete buttons -->
+				<tr th:each="bid : ${bidList}" class="d-flex">
+					<td th:text="${bid.id}" class="col-1"></td>
+					<td th:text="${bid.account}" class="col-3"></td>
+					<td th:text="${bid.type}" class="col-3"></td>
+					<td th:text="${bid.bidQuantity}" class="col-3"></td>
+					<td class="text-center col-2">
+						<a th:href="@{/bidList/update/{id}(id=${bid.id})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/bidList/delete/{id}(id=${bid.id})}">Delete</a>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

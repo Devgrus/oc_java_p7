@@ -1,4 +1,4 @@
-package com.nnk.springboot.dto;
+package com.nnk.springboot.dto.bid;
 
 import com.nnk.springboot.domain.BidList;
 import lombok.Builder;

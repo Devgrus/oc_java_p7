@@ -1,8 +1,8 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.dto.BidAddDto;
-import com.nnk.springboot.dto.BidUpdateDto;
+import com.nnk.springboot.dto.bid.BidAddDto;
+import com.nnk.springboot.dto.bid.BidUpdateDto;
 import com.nnk.springboot.services.BidListService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -194,5 +194,17 @@ public class BidListControllerTest {
                         .param("type", "TypeTest")
                         .param("bidQuantity", "aa"))
                 .andExpect(model().attributeErrorCount("bidUpdateDto", 1));
+    }
+
+    @Test
+    public void deleteBidTest() throws Exception {
+        //given
+        Integer id = 1;
+
+        //when
+        doNothing().when(bidListService).delete(id);
+        //then
+        mockMvc.perform(get("/bidList/delete/" + id.toString()))
+                .andExpect(redirectedUrl("/bidList/list"));
     }
 }

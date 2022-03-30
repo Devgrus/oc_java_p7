@@ -1,7 +1,7 @@
 package com.nnk.springboot.services;
 
 import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.dto.BidUpdateDto;
+import com.nnk.springboot.dto.bid.BidUpdateDto;
 import com.nnk.springboot.repositories.BidListRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
