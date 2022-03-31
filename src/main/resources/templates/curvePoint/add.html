@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCterm html>
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -14,11 +14,26 @@
 	</div>
 
 	<div class="row">
-		<form action="#" th:action="@{/curvePoint/validate}" th:object="${curvePoint}" method="post" class="form-horizontal" style="width: 100%">
-			<!--
-			TODO: Create a form to input the values of CurvePoint, there are 2 buttons: Save data and Cancel to the list CurvePoint
-			 -->
-
+		<form action="#" th:action="@{/curvePoint/validate}" th:object="${curvePointAddDto}" method="post" class="form-horizontal" style="width: 100%">
+			<div class="form-group">
+				<label for="curveId" class="col-sm-2 control-label">Curve Id</label>
+				<input term="text" id="curveId" th:field="*{curveId}" class="form-control" placeholder="Curve Id" />
+				<p th:if="${#fields.hasErrors('curveId')}" th:errors="*{curveId}" class="text-danger" ></p>
+			</div>
+			<div class="form-group">
+				<label for="term" class="col-sm-2 control-label">Term</label>
+				<input term="text" id="term" th:field="*{term}" class="form-control" placeholder="Term" />
+				<p th:if="${#fields.hasErrors('term')}" th:errors="*{term}" class="text-danger"></p>
+			</div>
+			<div class="form-group">
+				<label for="value" class="col-sm-2 control-label">Value</label>
+				<input term="text" id="value" th:field="*{value}" class="form-control" placeholder="Value" />
+				<p th:if="${#fields.hasErrors('value')}" th:errors="*{value}" class="text-danger"></p>
+			</div>
+			<div>
+				<a th:href="@{/curvePoint/list}" class="btn btn-danger btn-sm">Cancel</a>
+				<button term="submit" class="btn btn-primary btn-sm">Add CurvePoint</button>
+			</div>
 		</form>
 	</div>
 
