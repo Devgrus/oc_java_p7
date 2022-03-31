@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.dto.curvePoint.CurvePointAddDto;
+import com.nnk.springboot.dto.curvePoint.CurvePointUpdateDto;
 import com.nnk.springboot.services.CurvePointService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,5 +84,67 @@ public class CurveControllerTest {
                         .param("term", "5.0")
                         .param("value", "aa"))
                 .andExpect(model().attributeErrorCount("curvePointAddDto", 1));
+    }
+
+    @Test
+    public void updateCurveTest() throws Exception {
+        //given
+        Integer id = 1;
+
+        CurvePointUpdateDto curvePointUpdateDto = CurvePointUpdateDto.builder()
+                .curveId(2).term(1d).value(1d)
+                .build();
+
+        //when
+        doNothing().when(curvePointService).update(any(), any());
+
+        //then
+        mockMvc.perform(post("/curvePoint/update/" + id)
+                .param("curveId", "1")
+                .param("term", "5.0")
+                .param("value", "1"))
+                .andExpect(redirectedUrl("/curvePoint/list"));
+    }
+
+    @Test
+    public void updateCurveTestCurveIdIsNotInteger() throws Exception {
+        //given
+
+        //when
+
+        //then
+        mockMvc.perform(post("/curvePoint/update/1")
+                        .param("curveId", "ab")
+                        .param("term", "5.0")
+                        .param("value", "5.0"))
+                .andExpect(model().attributeErrorCount("curvePointUpdateDto", 1));
+    }
+
+    @Test
+    public void updateCurveTestTermIsNotNumber() throws Exception {
+        //given
+
+        //when
+
+        //then
+        mockMvc.perform(post("/curvePoint/update/1")
+                        .param("curveId", "1")
+                        .param("term", "a")
+                        .param("value", "5.0"))
+                .andExpect(model().attributeErrorCount("curvePointUpdateDto", 1));
+    }
+
+    @Test
+    public void updateCurveTestValueIsNotNumber() throws Exception {
+        //given
+
+        //when
+
+        //then
+        mockMvc.perform(post("/curvePoint/update/1")
+                        .param("curveId", "1")
+                        .param("term", "5.0")
+                        .param("value", "aa"))
+                .andExpect(model().attributeErrorCount("curvePointUpdateDto", 1));
     }
 }
