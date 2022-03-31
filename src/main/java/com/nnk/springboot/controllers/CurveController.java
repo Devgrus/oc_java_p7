@@ -27,10 +27,15 @@ public class CurveController {
         this.curvePointService = curvePointService;
     }
 
+    /**
+     * Curve point list page
+     * @param model curve point list
+     * @return curve point list page
+     */
     @RequestMapping("/curvePoint/list")
     public String home(Model model)
     {
-        // TODO: find all Curve Point, add to model
+        model.addAttribute("curvePointList", curvePointService.getAllCurvePointList());
         return "curvePoint/list";
     }
 
@@ -98,9 +103,14 @@ public class CurveController {
         return "redirect:/curvePoint/list";
     }
 
+    /**
+     * Delete a curve point
+     * @param id curve point id
+     * @return curve point list page
+     */
     @GetMapping("/curvePoint/delete/{id}")
-    public String deleteCurve(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Curve by Id and delete the Curve, return to Curve list
+    public String deleteCurve(@PathVariable("id") Integer id) {
+        curvePointService.delete(id);
         return "redirect:/curvePoint/list";
     }
 }

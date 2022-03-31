@@ -28,16 +28,25 @@
 		<a href="/curvePoint/add" class="btn btn-primary btn-sm">Add New</a>
 		<table class="table table-bordered">
 			<thead>
-				<tr>
-					<th>Id</th>
-					<th>CurvePointId</th>
-					<th>Term</th>
-					<th>Value</th>
-					<th>Action</th>
+				<tr class="d-flex">
+					<th class="col-1">Id</th>
+					<th class="col-3">CurvePointId</th>
+					<th class="col-3">Term</th>
+					<th class="col-3">Value</th>
+					<th class="col-2">Action</th>
 				</tr>
 			</thead>
 			<tbody>
-			<!-- TODO: Show all CurvePoint to the table, the action column will have Edit & Delete buttons -->
+				<tr th:each="curvePoint : ${curvePointList}" class="d-flex">
+					<td th:text="${curvePoint.id}" class="col-1"></td>
+					<td th:text="${curvePoint.curveId}" class="col-3"></td>
+					<td th:text="${curvePoint.term}" class="col-3"></td>
+					<td th:text="${curvePoint.value}" class="col-3"></td>
+					<td class="text-center col-2">
+						<a th:href="@{/curvePoint/update/{id}(id=${curvePoint.id})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/curvePoint/delete/{id}(id=${curvePoint.id})}">Delete</a>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

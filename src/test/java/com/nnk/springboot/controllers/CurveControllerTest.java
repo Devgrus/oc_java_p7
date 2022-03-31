@@ -147,4 +147,17 @@ public class CurveControllerTest {
                         .param("value", "aa"))
                 .andExpect(model().attributeErrorCount("curvePointUpdateDto", 1));
     }
+
+    @Test
+    public void deleteCurveTest() throws Exception {
+        //given
+        Integer id = 1;
+
+        //when
+        doNothing().when(curvePointService).delete(id);
+
+        //then
+        mockMvc.perform(get("/curvePoint/delete/" + id.toString()))
+                .andExpect(redirectedUrl("/curvePoint/list"));
+    }
 }
