@@ -16,22 +16,22 @@
 		<form action="#" th:action="@{/curvePoint/update/{id}(id=${id})}" th:object="${curvePointUpdateDto}" method="post" class="form-horizontal" style="width: 100%">
 			<div class="form-group">
 				<label for="curveId" class="col-sm-2 control-label">Curve Id</label>
-				<input term="text" id="curveId" th:field="*{curveId}" class="form-control" placeholder="Curve Id" />
+				<input type="text" id="curveId" th:field="*{curveId}" class="form-control" placeholder="Curve Id" />
 				<p th:if="${#fields.hasErrors('curveId')}" th:errors="*{curveId}" class="text-danger" ></p>
 			</div>
 			<div class="form-group">
 				<label for="term" class="col-sm-2 control-label">Term</label>
-				<input term="text" id="term" th:field="*{term}" class="form-control" placeholder="Term" />
+				<input type="text" id="term" th:field="*{term}" class="form-control" placeholder="Term" />
 				<p th:if="${#fields.hasErrors('term')}" th:errors="*{term}" class="text-danger"></p>
 			</div>
 			<div class="form-group">
 				<label for="value" class="col-sm-2 control-label">Value</label>
-				<input term="text" id="value" th:field="*{value}" class="form-control" placeholder="Value" />
+				<input type="text" id="value" th:field="*{value}" class="form-control" placeholder="Value" />
 				<p th:if="${#fields.hasErrors('value')}" th:errors="*{value}" class="text-danger"></p>
 			</div>
 			<div>
 				<a th:href="@{/curvePoint/list}" class="btn btn-danger btn-sm">Cancel</a>
-				<button term="submit" class="btn btn-primary btn-sm">Update CurvePoint</button>
+				<button type="submit" class="btn btn-primary btn-sm">Update CurvePoint</button>
 			</div>
 		</form>
 	</div>

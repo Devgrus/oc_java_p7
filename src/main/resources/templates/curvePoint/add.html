@@ -22,17 +22,17 @@
 			</div>
 			<div class="form-group">
 				<label for="term" class="col-sm-2 control-label">Term</label>
-				<input term="text" id="term" th:field="*{term}" class="form-control" placeholder="Term" />
+				<input type="text" id="term" th:field="*{term}" class="form-control" placeholder="Term" />
 				<p th:if="${#fields.hasErrors('term')}" th:errors="*{term}" class="text-danger"></p>
 			</div>
 			<div class="form-group">
 				<label for="value" class="col-sm-2 control-label">Value</label>
-				<input term="text" id="value" th:field="*{value}" class="form-control" placeholder="Value" />
+				<input type="text" id="value" th:field="*{value}" class="form-control" placeholder="Value" />
 				<p th:if="${#fields.hasErrors('value')}" th:errors="*{value}" class="text-danger"></p>
 			</div>
 			<div>
 				<a th:href="@{/curvePoint/list}" class="btn btn-danger btn-sm">Cancel</a>
-				<button term="submit" class="btn btn-primary btn-sm">Add CurvePoint</button>
+				<button type="submit" class="btn btn-primary btn-sm">Add CurvePoint</button>
 			</div>
 		</form>
 	</div>
