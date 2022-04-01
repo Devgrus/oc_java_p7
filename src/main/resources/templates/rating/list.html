@@ -28,17 +28,27 @@
 		<a href="/rating/add" class="btn btn-primary btn-sm">Add New</a>
 		<table class="table table-bordered">
 			<thead>
-				<tr>
-					<th>Id</th>
-					<th>MoodysRating</th>
-					<th>SandPRating</th>
-					<th>FitchRating</th>
-					<th>Order</th>
-					<th>Action</th>
+				<tr class="d-flex">
+					<th class="col-1">Id</th>
+					<th class="col-2">MoodysRating</th>
+					<th class="col-2">SandPRating</th>
+					<th class="col-2">FitchRating</th>
+					<th class="col-3">Order</th>
+					<th class="col-2">Action</th>
 				</tr>
 			</thead>
 			<tbody>
-			<!-- TODO: Show all Rating to the table, the Action column will have Edit & Delete buttons -->
+				<tr th:each="rating : ${ratingList}" class="d-flex">
+					<td th:text="${rating.id}" class="col-1"></td>
+					<td th:text="${rating.moodysRating}" class="col-2"></td>
+					<td th:text="${rating.sandPRating}" class="col-2"></td>
+					<td th:text="${rating.fitchRating}" class="col-2"></td>
+					<td th:text="${rating.orderNumber}" class="col-3"></td>
+					<td class="text-center col-2">
+						<a th:href="@{/rating/update/{id}(id=${rating.id})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/rating/delete/{id}(id=${rating.id})}">Delete</a>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

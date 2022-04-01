@@ -26,10 +26,15 @@ public class RatingController {
         this.ratingService = ratingService;
     }
 
+    /**
+     * Rating list page
+     * @param model rating list
+     * @return rating list page
+     */
     @RequestMapping("/rating/list")
     public String home(Model model)
     {
-        // TODO: find all Rating, add to model
+        model.addAttribute("ratingList", ratingService.getAllRatingList());
         return "rating/list";
     }
 
@@ -94,9 +99,14 @@ public class RatingController {
         return "redirect:/rating/list";
     }
 
+    /**
+     * Delete a rating
+     * @param id rating id
+     * @return rating list page
+     */
     @GetMapping("/rating/delete/{id}")
-    public String deleteRating(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Rating by Id and delete the Rating, return to Rating list
+    public String deleteRating(@PathVariable("id") Integer id) {
+        ratingService.delete(id);
         return "redirect:/rating/list";
     }
 }
