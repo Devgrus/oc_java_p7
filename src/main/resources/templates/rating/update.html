@@ -14,10 +14,31 @@
 	</div>
 
 	<div class="row">
-		<form action="#" th:action="@{/rating/update/{id}(id=${rating.id})}" th:object="${rating}" method="post" class="form-horizontal" style="width: 100%">
-			<!--
-			TODO: Create a form to edit the values of Rating, there are 2 buttons: Update data and Cancel to the Rating
-			 -->
+		<form action="#" th:action="@{/rating/update/{id}(id=${id})}" th:object="${ratingUpdateDto}" method="post" class="form-horizontal" style="width: 100%">
+			<div class="form-group">
+				<label for="orderNumber" class="col-sm-2 control-label">Order number</label>
+				<input type="text" id="orderNumber" th:field="*{orderNumber}" class="form-control" placeholder="Order number" />
+				<p th:if="${#fields.hasErrors('orderNumber')}" th:errors="*{orderNumber}" class="text-danger" ></p>
+			</div>
+			<div class="form-group">
+				<label for="moodysRating" class="col-sm-2 control-label">Moody's rating</label>
+				<input type="text" id="moodysRating" th:field="*{moodysRating}" class="form-control" placeholder="Moody's rating" />
+				<p th:if="${#fields.hasErrors('moodysRating')}" th:errors="*{moodysRating}" class="text-danger"></p>
+			</div>
+			<div class="form-group">
+				<label for="sandPRating" class="col-sm-2 control-label">S&P rating</label>
+				<input type="text" id="sandPRating" th:field="*{sandPRating}" class="form-control" placeholder="S&P rating" />
+				<p th:if="${#fields.hasErrors('sandPRating')}" th:errors="*{sandPRating}" class="text-danger"></p>
+			</div>
+			<div class="form-group">
+				<label for="fitchRating" class="col-sm-2 control-label">Fitch rating</label>
+				<input type="text" id="fitchRating" th:field="*{fitchRating}" class="form-control" placeholder="Fitch rating" />
+				<p th:if="${#fields.hasErrors('fitchRating')}" th:errors="*{fitchRating}" class="text-danger"></p>
+			</div>
+			<div>
+				<a th:href="@{/rating/list}" class="btn btn-danger btn-sm">Cancel</a>
+				<button type="submit" class="btn btn-primary btn-sm">Update Rating</button>
+			</div>
 		</form>
 	</div>
 

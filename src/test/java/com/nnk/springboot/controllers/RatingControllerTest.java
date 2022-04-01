@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.rating.RatingAddDto;
+import com.nnk.springboot.dto.rating.RatingUpdateDto;
 import com.nnk.springboot.services.RatingService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,50 @@ public class RatingControllerTest {
                         .param("sandPRating", dto.getSandPRating())
                         .param("fitchRating", dto.getFitchRating()))
                 .andExpect(model().attributeErrorCount("ratingAddDto", 1));
+    }
+
+    @Test
+    public void updateRatingTest() throws Exception {
+        //given
+        int id = 1;
+
+        RatingUpdateDto ratingUpdateDto = RatingUpdateDto.builder()
+                .orderNumber(5).moodysRating("A").sandPRating("A").fitchRating("A")
+                .build();
+
+
+        //when
+        doNothing().when(ratingService).update(any(), any());
+
+        //then
+        mockMvc.perform(post("/rating/update/" + id)
+                .param("orderNumber", ratingUpdateDto.getOrderNumber().toString())
+                .param("moodysRating", ratingUpdateDto.getMoodysRating())
+                .param("sandPRating", ratingUpdateDto.getSandPRating())
+                .param("fitchRating", ratingUpdateDto.getFitchRating()))
+                .andExpect(redirectedUrl("/rating/list"));
+    }
+
+    @Test
+    public void updateRatingTestOrderNumberIsNull() throws Exception {
+        //given
+        int id = 1;
+
+        RatingUpdateDto ratingUpdateDto = RatingUpdateDto.builder()
+                .orderNumber(null).moodysRating("A").sandPRating("A").fitchRating("A")
+                .build();
+
+
+        //when
+        doNothing().when(ratingService).update(any(), any());
+
+        //then
+        mockMvc.perform(post("/rating/update/" + id)
+                        .param("orderNumber", "")
+                        .param("moodysRating", ratingUpdateDto.getMoodysRating())
+                        .param("sandPRating", ratingUpdateDto.getSandPRating())
+                        .param("fitchRating", ratingUpdateDto.getFitchRating()))
+                .andExpect(model().attributeErrorCount("ratingUpdateDto", 1));
     }
 
 }
