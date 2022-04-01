@@ -28,7 +28,7 @@
 			<div class="form-group">
 				<label for="bidQuantity" class="col-sm-2 control-label">Bid Quantity</label>
 				<input type="text" id="bidQuantity" th:field="*{bidQuantity}" class="form-control" placeholder="Bid Quantity" />
-				<p th:if="${#fields.hasErrors('bidQuantity')}" class="text-danger">Ex) 123456, 12345678.50</p>
+				<p th:if="${#fields.hasErrors('bidQuantity')}" th:errors="*{bidQuantity}" class="text-danger"></p>
 			</div>
 			<div>
 				<a th:href="@{/bidList/list}" class="btn btn-danger btn-sm">Cancel</a>

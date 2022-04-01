@@ -9,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -64,7 +63,7 @@ public class BidListServiceTest {
         //then
         assertThat(bidListService.getBidUpdateFormData(bidList.getBidListId()).getAccount()).isEqualTo(bidList.getAccount());
         assertThat(bidListService.getBidUpdateFormData(bidList.getBidListId()).getType()).isEqualTo(bidList.getType());
-        assertThat(bidListService.getBidUpdateFormData(bidList.getBidListId()).getBidQuantity()).isEqualTo(BigDecimal.valueOf(bidList.getBidQuantity()));
+        assertThat(bidListService.getBidUpdateFormData(bidList.getBidListId()).getBidQuantity()).isEqualTo(bidList.getBidQuantity());
     }
 
     @Test
@@ -91,7 +90,7 @@ public class BidListServiceTest {
         BidUpdateDto dto = BidUpdateDto.builder()
                 .account("Account")
                 .type("Type")
-                .bidQuantity(BigDecimal.valueOf(5))
+                .bidQuantity(5d)
                 .build();
         //when
         when(bidListRepository.findByBidListId(bidList.getBidListId())).thenReturn(Optional.of(bidList));
@@ -111,7 +110,7 @@ public class BidListServiceTest {
         BidUpdateDto dto = BidUpdateDto.builder()
                 .account("Account")
                 .type("Type")
-                .bidQuantity(BigDecimal.valueOf(5))
+                .bidQuantity(5d)
                 .build();
         //when
         when(bidListRepository.findByBidListId(id)).thenReturn(Optional.empty());

@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.*;
-import java.math.BigDecimal;
 
 @Data
 @Builder
@@ -20,15 +19,17 @@ public class BidUpdateDto {
 
     @NotNull(message = "Bid Quantity is mandatory")
     @Positive(message = "Bid Quantity must be positive")
-    @Digits(integer = 10 , fraction = 2)
-    private BigDecimal bidQuantity;
+    @Digits(integer = 10, fraction = 2, message = "${validatedValue > 9999999999.99 ? "
+            + "'numeric value out of bounds (min 0.01, max 9999999999.99)':"
+            + "'value cannot contain more than two fractional digits.'}")
+    private Double bidQuantity;
 
     public BidList toEntity(Integer id) {
         return BidList.builder()
                 .bidListId(id)
                 .account(account)
                 .type(type)
-                .bidQuantity(bidQuantity.doubleValue())
+                .bidQuantity(bidQuantity)
                 .build();
     }
 }

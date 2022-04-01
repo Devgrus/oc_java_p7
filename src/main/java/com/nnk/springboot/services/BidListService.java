@@ -9,7 +9,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -36,7 +35,7 @@ public class BidListService {
 
     /**
      * Find a bid info by id
-     * @param id
+     * @param id bidListId
      * @return bidList
      */
     @Transactional
@@ -55,7 +54,7 @@ public class BidListService {
                         .id(bidList.getBidListId())
                         .account(bidList.getAccount())
                         .type(bidList.getType())
-                        .bidQuantity(BigDecimal.valueOf(bidList.getBidQuantity()))
+                        .bidQuantity(bidList.getBidQuantity())
                         .build()));
         return dto;
     }
@@ -71,7 +70,7 @@ public class BidListService {
         return BidUpdateDto.builder()
                 .account(bidList.getAccount())
                 .type(bidList.getType())
-                .bidQuantity(BigDecimal.valueOf(bidList.getBidQuantity()))
+                .bidQuantity(bidList.getBidQuantity())
                 .build();
     }
 
@@ -85,7 +84,7 @@ public class BidListService {
         BidList bidList = bidListRepository.findByBidListId(id).orElseThrow(()-> new NoSuchElementException("ID NOT FOUND"));
         bidList.setAccount(dto.getAccount());
         bidList.setType(dto.getType());
-        bidList.setBidQuantity(dto.getBidQuantity().doubleValue());
+        bidList.setBidQuantity(dto.getBidQuantity());
     }
 
     /**

@@ -10,12 +10,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.math.BigDecimal;
 import java.util.NoSuchElementException;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
 @WebMvcTest(BidListController.class)
 public class BidListControllerTest {
@@ -32,13 +33,13 @@ public class BidListControllerTest {
         BidAddDto bidAddDto = BidAddDto.builder()
                 .account("AccountTest")
                 .type("TypeTest")
-                .bidQuantity(BigDecimal.valueOf(5))
+                .bidQuantity(5d)
                 .build();
 
         BidList bidList = BidList.builder()
                 .account(bidAddDto.getAccount())
                 .type(bidAddDto.getType())
-                .bidQuantity(bidAddDto.getBidQuantity().doubleValue())
+                .bidQuantity(bidAddDto.getBidQuantity())
                 .build();
 
         //when
@@ -107,7 +108,7 @@ public class BidListControllerTest {
         BidUpdateDto bidUpdateDto = BidUpdateDto.builder()
                 .account(bidList.getAccount())
                 .type(bidList.getType())
-                .bidQuantity(BigDecimal.valueOf(bidList.getBidQuantity()))
+                .bidQuantity(bidList.getBidQuantity())
                 .build();
 
         Integer id = 1;
@@ -115,7 +116,7 @@ public class BidListControllerTest {
         when(bidListService.getBidUpdateFormData(id)).thenReturn(bidUpdateDto);
 
         //then
-        mockMvc.perform(get("/bidList/update/" + id.toString()))
+        mockMvc.perform(get("/bidList/update/" + id))
                 .andExpect(model().attribute("bidUpdateDto", bidUpdateDto));
     }
 
@@ -128,19 +129,19 @@ public class BidListControllerTest {
         when(bidListService.getBidUpdateFormData(id)).thenThrow(new NoSuchElementException("ID NOT FOUND"));
 
         //then
-        mockMvc.perform(get("/bidList/update/" + id.toString()))
+        mockMvc.perform(get("/bidList/update/" + id))
                 .andExpect(redirectedUrl("/bidList/list"));
     }
 
     @Test
     public void updateBidTest() throws Exception {
         //given
-        Integer id = 1;
+        int id = 1;
 
         BidUpdateDto bidUpdateDto = BidUpdateDto.builder()
                 .account("AccountTest")
                 .type("AccountTest")
-                .bidQuantity(BigDecimal.valueOf(5d))
+                .bidQuantity(5d)
                 .build();
 
         //when
@@ -204,7 +205,7 @@ public class BidListControllerTest {
         //when
         doNothing().when(bidListService).delete(id);
         //then
-        mockMvc.perform(get("/bidList/delete/" + id.toString()))
+        mockMvc.perform(get("/bidList/delete/" + id))
                 .andExpect(redirectedUrl("/bidList/list"));
     }
 }
