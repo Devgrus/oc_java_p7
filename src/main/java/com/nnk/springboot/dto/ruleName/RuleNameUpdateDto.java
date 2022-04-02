@@ -1,13 +1,13 @@
 package com.nnk.springboot.dto.ruleName;
 
-import com.nnk.springboot.domain.RuleName;
-
 import lombok.*;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Data
 @Builder
-public class RuleNameAddDto {
+public class RuleNameUpdateDto {
     @NotBlank(message = "Name is mandatory")
     @Size(max = 125, message = "125 characters maximum")
     private String name;
@@ -26,15 +26,4 @@ public class RuleNameAddDto {
 
     @Size(max = 125, message = "125 characters maximum")
     private String sqlPart;
-
-    public RuleName toEntity() {
-        return RuleName.builder()
-                .name(name)
-                .description(description)
-                .json(json)
-                .template(template)
-                .sqlStr(sqlStr)
-                .sqlPart(sqlPart)
-                .build();
-    }
 }
