@@ -143,4 +143,17 @@ public class UserControllerTest {
                         .param("role", dto.getRole().toString()))
                 .andExpect(redirectedUrl("/user/list"));
     }
+
+    @Test
+    public void deleteUserTest() throws Exception {
+        //given
+        Integer id = 1;
+
+        //when
+        doNothing().when(userService).delete(id);
+
+        //then
+        mockMvc.perform(get("/user/delete/" + id))
+                .andExpect(redirectedUrl("/user/list"));
+    }
 }

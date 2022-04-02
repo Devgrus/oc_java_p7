@@ -1,12 +1,15 @@
 package com.nnk.springboot.services;
 
 import com.nnk.springboot.domain.User;
+import com.nnk.springboot.dto.user.UserListDto;
 import com.nnk.springboot.dto.user.UserUpdateDto;
 import com.nnk.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -27,6 +30,22 @@ public class UserService {
     @Transactional
     public User save(User user) {
         return userRepository.save(user);
+    }
+
+    /**
+     * Get all user list
+     * @return all user list
+     */
+    public List<UserListDto> getAllUserList() {
+        List<UserListDto> dto = new ArrayList<>();
+        userRepository.findAll().forEach(user ->
+                dto.add(UserListDto.builder()
+                        .id(user.getId())
+                        .username(user.getUsername())
+                        .fullname(user.getFullname())
+                        .role(user.getRole())
+                        .build()));
+        return dto;
     }
 
     /**
@@ -56,5 +75,15 @@ public class UserService {
         user.setFullname(dto.getFullname());
         user.setPassword(dto.getPassword());
         user.setRole(dto.getRole());
+    }
+
+    /**
+     * Delete a user
+     * @param id user id
+     * @throws RuntimeException id not found in DB
+     */
+    @Transactional
+    public void delete(Integer id) throws RuntimeException {
+        userRepository.deleteById(id);
     }
 }

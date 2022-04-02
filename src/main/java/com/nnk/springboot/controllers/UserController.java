@@ -1,6 +1,5 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.user.UserAddDto;
 import com.nnk.springboot.dto.user.UserUpdateDto;
 import com.nnk.springboot.services.UserService;
@@ -32,7 +31,7 @@ public class UserController {
     @RequestMapping("/user/list")
     public String home(Model model)
     {
-//        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userService.getAllUserList());
         return "user/list";
     }
 
@@ -55,11 +54,7 @@ public class UserController {
      */
     @PostMapping("/user/validate")
     public String validate(@Validated @ModelAttribute("user") UserAddDto user, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-//            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//            user.setPassword(encoder.encode(user.getPassword()));
-            return "user/add";
-        }
+        if (result.hasErrors()) return "user/add";
         userService.save(user.toEntity());
         return "redirect:/user/list";
     }
@@ -109,9 +104,7 @@ public class UserController {
      */
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id) {
-//        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-//        userRepository.delete(user);
-//        model.addAttribute("users", userRepository.findAll());
+        userService.delete(id);
         return "redirect:/user/list";
     }
 }
