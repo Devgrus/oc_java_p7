@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.user.UserAddDto;
+import com.nnk.springboot.dto.user.UserUpdateDto;
 import com.nnk.springboot.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.NoSuchElementException;
 
 @Controller
 public class UserController {
@@ -70,9 +72,12 @@ public class UserController {
      */
     @GetMapping("/user/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-//        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-//        user.setPassword("");
-//        model.addAttribute("user", user);
+        try {
+            model.addAttribute("id", id);
+            model.addAttribute("user", userService.getUserUpdateFormData(id));
+        } catch (NoSuchElementException e) {
+            return "redirect:/user/list";
+        }
         return "user/update";
     }
 
@@ -85,17 +90,15 @@ public class UserController {
      * @return update user page or user list page
      */
     @PostMapping("/user/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid User user,
+    public String updateUser(@PathVariable("id") Integer id, @Valid @ModelAttribute("user") UserUpdateDto user,
                              BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "user/update";
+        if (result.hasErrors()) return "user/update";
+        try {
+            userService.update(id, user);
+        } catch (NoSuchElementException e) {
+            return "redirect:/user/list";
         }
 
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//        user.setPassword(encoder.encode(user.getPassword()));
-//        user.setId(id);
-//        userRepository.save(user);
-//        model.addAttribute("users", userRepository.findAll());
         return "redirect:/user/list";
     }
 
