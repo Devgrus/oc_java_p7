@@ -25,10 +25,15 @@ public class RuleNameController {
         this.ruleNameService = ruleNameService;
     }
 
+    /**
+     * Rule name list page
+     * @param model rule name list
+     * @return rule name list page
+     */
     @RequestMapping("/ruleName/list")
     public String home(Model model)
     {
-        // TODO: find all RuleName, add to model
+        model.addAttribute("ruleNameList", ruleNameService.getAllRuleNameList());
         return "ruleName/list";
     }
 
@@ -93,9 +98,14 @@ public class RuleNameController {
         return "redirect:/ruleName/list";
     }
 
+    /**
+     * Delete a rule name
+     * @param id rule name id
+     * @return rule name list page
+     */
     @GetMapping("/ruleName/delete/{id}")
-    public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find RuleName by Id and delete the RuleName, return to Rule list
+    public String deleteRuleName(@PathVariable("id") Integer id) {
+        ruleNameService.delete(id);
         return "redirect:/ruleName/list";
     }
 }

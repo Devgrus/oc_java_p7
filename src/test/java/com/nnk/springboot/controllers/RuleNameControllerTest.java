@@ -137,4 +137,17 @@ public class RuleNameControllerTest {
                         .param("sqlPart", dto.getSqlPart()))
                 .andExpect(redirectedUrl("/ruleName/list"));
     }
+
+    @Test
+    public void deleteRuleNameTest() throws Exception {
+        //given
+        Integer id = 1;
+
+        //when
+        doNothing().when(ruleNameService).delete(id);
+
+        //then
+        mockMvc.perform(get("/ruleName/delete/" + id))
+                .andExpect(redirectedUrl("/ruleName/list"));
+    }
 }

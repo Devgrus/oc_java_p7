@@ -28,19 +28,31 @@
 		<a href="/ruleName/add" class="btn btn-primary btn-sm">Add New</a>
 		<table class="table table-bordered">
 			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Name</th>
-					<th>Description</th>
-					<th>json</th>
-					<th>template</th>
-					<th>sql</th>
-					<th>sqlPart</th>
-					<th>Action</th>
+				<tr class="d-flex">
+					<th class="col-1">Id</th>
+					<th class="col-2">Name</th>
+					<th class="col-2">Description</th>
+					<th class="col-1">json</th>
+					<th class="col-1">template</th>
+					<th class="col-2">sql</th>
+					<th class="col-1">sqlPart</th>
+					<th class="col-2">Action</th>
 				</tr>
 			</thead>
 			<tbody>
-			<!-- TODO: Show all RuleName to the table, the Action column will have Edit & Delete buttons -->
+				<tr th:each="ruleName : ${ruleNameList}" class="d-flex">
+					<td th:text="${ruleName.id}" class="col-1"></td>
+					<td th:text="${ruleName.name}" class="col-2"></td>
+					<td th:text="${ruleName.description}" class="col-2"></td>
+					<td th:text="${ruleName.json}" class="col-1"></td>
+					<td th:text="${ruleName.template}" class="col-1"></td>
+					<td th:text="${ruleName.sqlStr}" class="col-2"></td>
+					<td th:text="${ruleName.sqlPart}" class="col-1"></td>
+					<td class="text-center col-2">
+						<a th:href="@{/ruleName/update/{id}(id=${ruleName.id})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/ruleName/delete/{id}(id=${ruleName.id})}">Delete</a>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
