@@ -17,7 +17,7 @@
 		<form action="#" th:action="@{/curvePoint/validate}" th:object="${curvePointAddDto}" method="post" class="form-horizontal" style="width: 100%">
 			<div class="form-group">
 				<label for="curveId" class="col-sm-2 control-label">Curve Id</label>
-				<input term="text" id="curveId" th:field="*{curveId}" class="form-control" placeholder="Curve Id" />
+				<input type="text" id="curveId" th:field="*{curveId}" class="form-control" placeholder="Curve Id" />
 				<p th:if="${#fields.hasErrors('curveId')}" th:errors="*{curveId}" class="text-danger" ></p>
 			</div>
 			<div class="form-group">
