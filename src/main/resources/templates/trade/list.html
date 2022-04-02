@@ -28,16 +28,25 @@
 		<a href="/trade/add" class="btn btn-primary btn-sm">Add New</a>
 		<table class="table table-bordered">
 			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Account</th>
-					<th>Type</th>
-					<th>Buy Quantity</th>
-					<th>Action</th>
+				<tr class="d-flex">
+					<th class="col-1">Id</th>
+					<th class="col-3">Account</th>
+					<th class="col-3">Type</th>
+					<th class="col-3">Buy Quantity</th>
+					<th class="col-2">Action</th>
 				</tr>
 			</thead>
 			<tbody>
-			<!-- TODO: Show all Trade to the table, the Action column will have Edit & Delete buttons -->
+				<tr th:each="trade : ${tradeList}" class="d-flex">
+					<td th:text="${trade.id}" class="col-1"></td>
+					<td th:text="${trade.account}" class="col-3"></td>
+					<td th:text="${trade.type}" class="col-3"></td>
+					<td th:text="${trade.buyQuantity}" class="col-3"></td>
+					<td class="text-center col-2">
+						<a th:href="@{/trade/update/{id}(id=${trade.id})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/trade/delete/{id}(id=${trade.id})}">Delete</a>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

@@ -1,12 +1,15 @@
 package com.nnk.springboot.services;
 
 import com.nnk.springboot.domain.Trade;
+import com.nnk.springboot.dto.trade.TradeListDto;
 import com.nnk.springboot.dto.trade.TradeUpdateDto;
 import com.nnk.springboot.repositories.TradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -27,6 +30,23 @@ public class TradeService {
     @Transactional
     public Trade save(Trade trade) {
         return tradeRepository.save(trade);
+    }
+
+    /**
+     * Get all trade list
+     * @return all trade list
+     */
+    @Transactional
+    public List<TradeListDto> getAllTradeList() {
+        List<TradeListDto> dto = new ArrayList<>();
+        tradeRepository.findAll().forEach(trade ->
+                dto.add(TradeListDto.builder()
+                        .id(trade.getTradeId())
+                        .account(trade.getAccount())
+                        .type(trade.getType())
+                        .buyQuantity(trade.getBuyQuantity())
+                        .build()));
+        return dto;
     }
 
     /**
@@ -52,8 +72,18 @@ public class TradeService {
     @Transactional
     public void update(Integer id, TradeUpdateDto dto) {
         Trade trade = tradeRepository.findById(id).orElseThrow(()-> new NoSuchElementException("ID NOT FOUND"));
-        if(!trade.getAccount().equals(dto.getAccount())) trade.setAccount(dto.getAccount());
-        if(!trade.getType().equals(dto.getType())) trade.setType(dto.getType());
-        if(!trade.getBuyQuantity().equals(dto.getBuyQuantity())) trade.setBuyQuantity(dto.getBuyQuantity());
+        trade.setAccount(dto.getAccount());
+        trade.setType(dto.getType());
+        trade.setBuyQuantity(dto.getBuyQuantity());
+    }
+
+    /**
+     * Delete trade
+     * @param id trade id
+     * @throws RuntimeException id not found in DB
+     */
+    @Transactional
+    public void delete(Integer id) throws RuntimeException {
+        tradeRepository.deleteById(id);
     }
 }

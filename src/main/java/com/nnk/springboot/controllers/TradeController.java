@@ -31,7 +31,7 @@ public class TradeController {
     @RequestMapping("/trade/list")
     public String home(Model model)
     {
-        // TODO: find all Trade, add to model
+        model.addAttribute("tradeList", tradeService.getAllTradeList());
         return "trade/list";
     }
 
@@ -103,7 +103,7 @@ public class TradeController {
      */
     @GetMapping("/trade/delete/{id}")
     public String deleteTrade(@PathVariable("id") Integer id) {
-        // TODO: Find Trade by Id and delete the Trade, return to Trade list
+        tradeService.delete(id);
         return "redirect:/trade/list";
     }
 }

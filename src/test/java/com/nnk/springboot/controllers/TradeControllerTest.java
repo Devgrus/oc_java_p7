@@ -123,4 +123,17 @@ public class TradeControllerTest {
                         .param("buyQuantity", dto.getBuyQuantity().toString()))
                 .andExpect(redirectedUrl("/trade/list"));
     }
+
+    @Test
+    public void deleteTradeTest() throws Exception {
+        //given
+        Integer id = 1;
+
+        //when
+        doNothing().when(tradeService).delete(id);
+
+        //then
+        mockMvc.perform(get("/trade/delete/" + id))
+                .andExpect(redirectedUrl("/trade/list"));
+    }
 }
