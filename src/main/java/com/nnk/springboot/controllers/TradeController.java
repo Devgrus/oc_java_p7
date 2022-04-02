@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.dto.trade.TradeAddDto;
+import com.nnk.springboot.dto.trade.TradeUpdateDto;
 import com.nnk.springboot.services.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.NoSuchElementException;
 
 @Controller
 public class TradeController {
@@ -64,7 +67,12 @@ public class TradeController {
      */
     @GetMapping("/trade/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Trade by Id and to model then show to the form
+        try {
+            model.addAttribute("id", id);
+            model.addAttribute("trade", tradeService.getTradeUpdateFormData(id));
+        } catch (NoSuchElementException e) {
+            return "redirect:/trade/list";
+        }
         return "trade/update";
     }
 
@@ -77,9 +85,14 @@ public class TradeController {
      * @return update trade page or trade list page
      */
     @PostMapping("/trade/update/{id}")
-    public String updateTrade(@PathVariable("id") Integer id, @Validated Trade trade,
+    public String updateTrade(@PathVariable("id") Integer id, @Validated @ModelAttribute("trade")TradeUpdateDto trade,
                               BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Trade and return Trade list
+        if(result.hasErrors()) return "trade/update";
+        try {
+            tradeService.update(id, trade);
+        } catch (NoSuchElementException e) {
+            return "redirect:/trade/list";
+        }
         return "redirect:/trade/list";
     }
 
