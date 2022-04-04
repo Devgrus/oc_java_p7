@@ -14,7 +14,7 @@
 	</div>
 
 	<div class="row">
-		<form action="#" th:action="@{/rating/validate}" th:object="${ratingAddDto}" method="post" class="form-horizontal" style="width: 100%">
+		<form action="#" th:action="@{/rating/validate}" th:object="${rating}" method="post" class="form-horizontal" style="width: 100%">
 			<div class="form-group">
 				<label for="orderNumber" class="col-sm-2 control-label">Order number</label>
 				<input type="text" id="orderNumber" th:field="*{orderNumber}" class="form-control" placeholder="Order number" />

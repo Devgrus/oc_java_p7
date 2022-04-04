@@ -65,7 +65,7 @@ public class RuleNameControllerTest {
                         .param("template", dto.getTemplate())
                         .param("sqlStr", dto.getSqlStr())
                         .param("sqlPart", dto.getSqlPart()))
-                .andExpect(model().attributeErrorCount("ruleNameAddDto", 1));
+                .andExpect(model().attributeErrorCount("ruleName", 1));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class RuleNameControllerTest {
 
         //then
         mockMvc.perform(get("/ruleName/update/" + id))
-                .andExpect(model().attribute("ruleNameUpdateDto", dto));
+                .andExpect(model().attribute("ruleName", dto));
     }
 
     @Test

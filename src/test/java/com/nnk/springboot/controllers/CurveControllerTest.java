@@ -55,7 +55,7 @@ public class CurveControllerTest {
                         .param("curveId", "ab")
                         .param("term", "5.0")
                         .param("value", "5.0"))
-                .andExpect(model().attributeErrorCount("curvePointAddDto", 1));
+                .andExpect(model().attributeErrorCount("curvePoint", 1));
     }
 
     @Test
@@ -69,7 +69,7 @@ public class CurveControllerTest {
                         .param("curveId", "1")
                         .param("term", "a")
                         .param("value", "5.0"))
-                .andExpect(model().attributeErrorCount("curvePointAddDto", 1));
+                .andExpect(model().attributeErrorCount("curvePoint", 1));
     }
 
     @Test
@@ -83,17 +83,13 @@ public class CurveControllerTest {
                         .param("curveId", "1")
                         .param("term", "5.0")
                         .param("value", "aa"))
-                .andExpect(model().attributeErrorCount("curvePointAddDto", 1));
+                .andExpect(model().attributeErrorCount("curvePoint", 1));
     }
 
     @Test
     public void updateCurveTest() throws Exception {
         //given
         Integer id = 1;
-
-        CurvePointUpdateDto curvePointUpdateDto = CurvePointUpdateDto.builder()
-                .curveId(2).term(1d).value(1d)
-                .build();
 
         //when
         doNothing().when(curvePointService).update(any(), any());
@@ -117,7 +113,7 @@ public class CurveControllerTest {
                         .param("curveId", "ab")
                         .param("term", "5.0")
                         .param("value", "5.0"))
-                .andExpect(model().attributeErrorCount("curvePointUpdateDto", 1));
+                .andExpect(model().attributeErrorCount("curvePoint", 1));
     }
 
     @Test
@@ -131,7 +127,7 @@ public class CurveControllerTest {
                         .param("curveId", "1")
                         .param("term", "a")
                         .param("value", "5.0"))
-                .andExpect(model().attributeErrorCount("curvePointUpdateDto", 1));
+                .andExpect(model().attributeErrorCount("curvePoint", 1));
     }
 
     @Test
@@ -145,7 +141,7 @@ public class CurveControllerTest {
                         .param("curveId", "1")
                         .param("term", "5.0")
                         .param("value", "aa"))
-                .andExpect(model().attributeErrorCount("curvePointUpdateDto", 1));
+                .andExpect(model().attributeErrorCount("curvePoint", 1));
     }
 
     @Test

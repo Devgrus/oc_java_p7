@@ -1,7 +1,6 @@
 
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.dto.curvePoint.CurvePointAddDto;
 import com.nnk.springboot.dto.curvePoint.CurvePointUpdateDto;
 import com.nnk.springboot.services.CurvePointService;
@@ -10,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 
@@ -41,28 +37,28 @@ public class CurveController {
 
     /**
      * Add curve point page
-     * @param curvePointAddDto new curve point information
+     * @param curvePoint new curve point information
      * @return Add curve point page
      */
     @GetMapping("/curvePoint/add")
-    public String addCurveForm(CurvePointAddDto curvePointAddDto) {
+    public String addCurveForm(@ModelAttribute("curvePoint") CurvePointAddDto curvePoint) {
         return "curvePoint/add";
     }
 
     /**
      * Validate a new curve point information
-     * @param curvePointAddDto curve point information
+     * @param curvePoint curve point information
      * @param result result of validation
      * @param model if result is false, it will have curvePointAddDto and error message of validation
      * @return Add curve point page or curve point list page
      */
     @PostMapping("/curvePoint/validate")
-    public String validate(@Validated CurvePointAddDto curvePointAddDto, BindingResult result, Model model) {
+    public String validate(@Validated @ModelAttribute("curvePoint") CurvePointAddDto curvePoint, BindingResult result, Model model) {
         if(result.hasErrors()) {
             return "curvePoint/add";
         }
 
-        curvePointService.save(curvePointAddDto.toEntity());
+        curvePointService.save(curvePoint.toEntity());
         return "redirect:/curvePoint/list";
     }
 
@@ -76,7 +72,7 @@ public class CurveController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try {
             model.addAttribute("id", id.toString());
-            model.addAttribute("curvePointUpdateDto", curvePointService.getCurvePointUpdateFormData(id));
+            model.addAttribute("curvePoint", curvePointService.getCurvePointUpdateFormData(id));
         } catch (NoSuchElementException e) {
             return "redirect:/curvePoint/list";
         }
@@ -86,17 +82,17 @@ public class CurveController {
     /**
      * Update curve point information
      * @param id curve point id
-     * @param curvePointUpdateDto curve point information
+     * @param curvePoint curve point information
      * @param result result of validation
      * @param model if result is false, it will have curvePointUpdateDto and error message of validation
      * @return Update curve point page or curve point list page
      */
     @PostMapping("/curvePoint/update/{id}")
-    public String updateCurve(@PathVariable("id") Integer id, @Validated CurvePointUpdateDto curvePointUpdateDto,
+    public String updateCurve(@PathVariable("id") Integer id, @Validated @ModelAttribute("curvePoint") CurvePointUpdateDto curvePoint,
                             BindingResult result, Model model) {
         if(result.hasErrors()) return "curvePoint/update";
         try {
-            curvePointService.update(id, curvePointUpdateDto);
+            curvePointService.update(id, curvePoint);
         } catch (NoSuchElementException e) {
             return "redirect:/curvePoint/list";
         }

@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.NoSuchElementException;
@@ -40,25 +38,25 @@ public class RatingController {
 
     /**
      * Add rating page
-     * @param ratingAddDto new rating information
+     * @param rating new rating information
      * @return add rating page
      */
     @GetMapping("/rating/add")
-    public String addRatingForm(RatingAddDto ratingAddDto) {
+    public String addRatingForm(@ModelAttribute("rating") RatingAddDto rating) {
         return "rating/add";
     }
 
     /**
      * Validate a new rating information
-     * @param ratingAddDto rating information
+     * @param rating rating information
      * @param result result of validation
      * @param model if result is false, it will have ratingAddDto and error message of validation
      * @return Add rating page or rating list page
      */
     @PostMapping("/rating/validate")
-    public String validate(@Valid RatingAddDto ratingAddDto, BindingResult result, Model model) {
+    public String validate(@Validated @ModelAttribute("rating") RatingAddDto rating, BindingResult result, Model model) {
         if(result.hasErrors()) return "/rating/add";
-        ratingService.save(ratingAddDto.toEntity());
+        ratingService.save(rating.toEntity());
         return "redirect:/rating/list";
     }
 
@@ -72,7 +70,7 @@ public class RatingController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try {
             model.addAttribute("id", id.toString());
-            model.addAttribute("ratingUpdateDto", ratingService.getRatingUpdateFormData(id));
+            model.addAttribute("rating", ratingService.getRatingUpdateFormData(id));
         } catch (NoSuchElementException e) {
             return "redirect:/rating/list";
         }
@@ -82,17 +80,17 @@ public class RatingController {
     /**
      * Update rating information
      * @param id rating id
-     * @param ratingUpdateDto rating information
+     * @param rating rating information
      * @param result result of validation
      * @param model if result is false, it will have ratingUpdateDto and error message of validation
      * @return Update rating page or rating list page
      */
     @PostMapping("/rating/update/{id}")
-    public String updateRating(@PathVariable("id") Integer id, @Valid RatingUpdateDto ratingUpdateDto,
+    public String updateRating(@PathVariable("id") Integer id, @Validated @ModelAttribute("rating") RatingUpdateDto rating,
                                BindingResult result, Model model) {
         if(result.hasErrors()) return "rating/update";
         try {
-            ratingService.update(id, ratingUpdateDto);
+            ratingService.update(id, rating);
         } catch (NoSuchElementException e) {
             return "redirect:/rating/list";
         }

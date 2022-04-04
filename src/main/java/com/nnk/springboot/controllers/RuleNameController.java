@@ -8,10 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 
@@ -39,25 +36,25 @@ public class RuleNameController {
 
     /**
      * Add rule name page
-     * @param ruleNameAddDto new rule name information
+     * @param ruleName new rule name information
      * @return add rule name page
      */
     @GetMapping("/ruleName/add")
-    public String addRuleForm(RuleNameAddDto ruleNameAddDto) {
+    public String addRuleForm(@ModelAttribute("ruleName") RuleNameAddDto ruleName) {
         return "ruleName/add";
     }
 
     /**
      * Validate a new rule name information
-     * @param ruleNameAddDto rule name information
+     * @param ruleName rule name information
      * @param result result of validation
      * @param model if result is false, it will have ruleNameAddDto and error message of validation
      * @return Add rule name page or rule name list page
      */
     @PostMapping("/ruleName/validate")
-    public String validate(@Validated RuleNameAddDto ruleNameAddDto, BindingResult result, Model model) {
+    public String validate(@Validated @ModelAttribute("ruleName") RuleNameAddDto ruleName, BindingResult result, Model model) {
         if(result.hasErrors()) return "ruleName/add";
-        ruleNameService.save(ruleNameAddDto.toEntity());
+        ruleNameService.save(ruleName.toEntity());
         return "redirect:/ruleName/list";
     }
 
@@ -71,7 +68,7 @@ public class RuleNameController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try {
             model.addAttribute("id", id.toString());
-            model.addAttribute("ruleNameUpdateDto", ruleNameService.getRuleNameUpdateFormData(id));
+            model.addAttribute("ruleName", ruleNameService.getRuleNameUpdateFormData(id));
         } catch (NoSuchElementException e) {
             return "redirect:/ruleName/list";
         }
@@ -81,17 +78,17 @@ public class RuleNameController {
     /**
      * Update rule name information
      * @param id rule name id
-     * @param ruleNameUpdateDto rule name information
+     * @param ruleName rule name information
      * @param result result of validation
      * @param model if result is false, it will have ruleNameUpdateDto and error message of validation
      * @return update rule name page or rule name list page
      */
     @PostMapping("/ruleName/update/{id}")
-    public String updateRuleName(@PathVariable("id") Integer id, @Validated RuleNameUpdateDto ruleNameUpdateDto,
+    public String updateRuleName(@PathVariable("id") Integer id, @Validated @ModelAttribute("ruleName") RuleNameUpdateDto ruleName,
                                  BindingResult result, Model model) {
         if(result.hasErrors()) return "ruleName/update";
         try {
-            ruleNameService.update(id, ruleNameUpdateDto);
+            ruleNameService.update(id, ruleName);
         } catch (NoSuchElementException e) {
             return "redirect:/ruleName/list";
         }

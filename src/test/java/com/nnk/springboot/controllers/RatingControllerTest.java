@@ -68,7 +68,7 @@ public class RatingControllerTest {
                         .param("moodysRating", dto.getMoodysRating())
                         .param("sandPRating", dto.getSandPRating())
                         .param("fitchRating", dto.getFitchRating()))
-                .andExpect(model().attributeErrorCount("ratingAddDto", 1));
+                .andExpect(model().attributeErrorCount("rating", 1));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class RatingControllerTest {
                         .param("moodysRating", ratingUpdateDto.getMoodysRating())
                         .param("sandPRating", ratingUpdateDto.getSandPRating())
                         .param("fitchRating", ratingUpdateDto.getFitchRating()))
-                .andExpect(model().attributeErrorCount("ratingUpdateDto", 1));
+                .andExpect(model().attributeErrorCount("rating", 1));
     }
 
 }
