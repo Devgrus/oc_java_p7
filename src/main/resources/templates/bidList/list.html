@@ -1,31 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	  xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  layout:decorate="~{fragments/layout}">
 <head>
-<meta charset="utf-8"/>
 <title>Home</title>
-<link rel="stylesheet" href="../../css/bootstrap.min.css" >
 </head>
-<body>
+<body layout:fragment="content">
 <div class="container">
-	<div class="row">
-		<div class="col-6">
-			<a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
-			<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
-			<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
-			<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
-			<a href="/ruleName/list">Rule</a>
-		</div>
-		<div class="col-6 text-right">
-			Logged in user: <b th:inline="text"  class="user"> [[${#httpServletRequest.remoteUser}]] </b>
-			<form th:action="@{/app-logout}" method="POST">
-				<input type="submit" value="Logout"/>
-			</form>
-		</div>
-	</div>
 	<div class="row"><h2>Bid List</h2></div>
 	<div class="row">
-		<a href="/bidList/add" class="btn btn-primary btn-sm">Add New</a>
+		<a sec:authorize="hasRole('ADMIN')" href="/bidList/add" class="btn btn-primary btn-sm">Add New</a>
 		<table class="table table-bordered">
 			<thead>
 				<tr class="d-flex">
@@ -43,8 +29,8 @@
 					<td th:text="${bid.type}" class="col-3"></td>
 					<td th:text="${bid.bidQuantity}" class="col-3"></td>
 					<td class="text-center col-2">
-						<a th:href="@{/bidList/update/{id}(id=${bid.id})}">Edit</a>&nbsp;|&nbsp;
-						<a th:href="@{/bidList/delete/{id}(id=${bid.id})}">Delete</a>
+						<a sec:authorize="hasRole('ADMIN')" th:href="@{/bidList/update/{id}(id=${bid.id})}">Edit</a>&nbsp;|&nbsp;
+						<a sec:authorize="hasRole('ADMIN')" th:href="@{/bidList/delete/{id}(id=${bid.id})}">Delete</a>
 					</td>
 				</tr>
 			</tbody>

@@ -1,43 +1,37 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	  xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  layout:decorate="~{fragments/layout}">
 <head>
 <meta charset="utf-8"/>
 <title>Home</title>
-<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
 </head>
-<body>
+<body layout:fragment="content">
 <div class="container">
-	<div class="row">
-		<div class="col-6">
-
-		</div>
-		<div class="col-6 text-right">
-			<a href="/">Home</a>&nbsp;|&nbsp;<a href="/login">Login</a>
-		</div>
-	</div>
 	<div class="row"><h2>User List</h2></div>
 	<div class="row">
-		<a href="/user/add" class="btn btn-primary btn-sm">Add New</a>
+		<a sec:authorize="hasRole('ADMIN')" href="/user/add" class="btn btn-primary btn-sm">Add New</a>
 		<table class="table table-bordered">
 			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Full Name</th>
-					<th>User Name</th>
-					<th>Role</th>
-					<th>Action</th>
+				<tr class="d-flex">
+					<th class="col-1">Id</th>
+					<th class="col-3">Full Name</th>
+					<th class="col-3">User Name</th>
+					<th class="col-3">Role</th>
+					<th class="col-2">Action</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="user : ${users}">
-					<td style="width: 10%" th:text="${user.id}"></td>
-					<td th:text="${user.fullname}"></td>
-					<td th:text="${user.username}"></td>
-					<td style="width: 25%" th:text="${user.role}"></td>
-					<td style="width: 15%" class="text-center">
-						<a th:href="@{/user/update/{id}(id=${user.id})}">Edit</a>&nbsp;|&nbsp;
-						<a th:href="@{/user/delete/{id}(id=${user.id})}">Delete</a>
+				<tr class="d-flex" th:each="user : ${users}">
+					<td class="col-1" th:text="${user.id}"></td>
+					<td class="col-3" th:text="${user.fullname}"></td>
+					<td class="col-3" th:text="${user.username}"></td>
+					<td class="col-3" th:text="${user.role}"></td>
+					<td class="col-2 text-center">
+						<a sec:authorize="hasRole('ADMIN')" th:href="@{/user/update/{id}(id=${user.id})}">Edit</a>&nbsp;|&nbsp;
+						<a sec:authorize="hasRole('ADMIN')" th:href="@{/user/delete/{id}(id=${user.id})}">Delete</a>
 					</td>
 				</tr>
 			</tbody>

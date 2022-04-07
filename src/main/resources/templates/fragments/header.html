@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:fragment="headerFragment">
+    <!--        header code-->
+    <div class="row">
+        <div class="col-6">
+            <a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
+            <a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
+            <a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
+            <a href="/trade/list">Trade</a>&nbsp;|&nbsp;
+            <a href="/ruleName/list">Rule</a>
+            <span sec:authorize="hasRole('ADMIN')">&nbsp;|&nbsp;<a href="/user/list">User</a></span>
+        </div>
+        <div class="col-6 text-right">
+            <span sec:authorize="isAuthenticated()">Logged in user: <b th:text="${#authentication.getPrincipal().getUsername()}"  class="user"></b></span>
+            <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
+            <a sec:authorize="isAnonymous()" th:href="@{/login}">Login</a>
+        </div>
+    </div>
+</div>
+</html>
