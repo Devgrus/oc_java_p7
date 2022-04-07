@@ -13,4 +13,8 @@ public class HomeController
         return "home";
     }
 
+    @RequestMapping("/403")
+    public String error403() {
+        return "403";
+    }
 }

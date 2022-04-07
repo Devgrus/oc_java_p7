@@ -43,9 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/signup", "/css/**", "/h2-console/**", "/user/add")
+                .antMatchers("/", "/login", "/signup", "/css/**", "/h2-console/**", "/user/add", "/user/validate", "/error")
                 .permitAll()
-                .antMatchers("/user/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().csrf()
                 .ignoringAntMatchers("/h2-console/**")
@@ -53,15 +52,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
                 .and()
                 .formLogin()
-//                .loginPage("/login")
                 .and()
                 .oauth2Login()
-//                    .loginPage("/login")
                     .userInfoEndpoint()
                     .userService(customOauth2UserService)
                     .and()
                 .and().logout()
                 .logoutSuccessUrl("/")
+                .and().exceptionHandling().accessDeniedPage("/403")
                 .and().csrf().disable();
 
 

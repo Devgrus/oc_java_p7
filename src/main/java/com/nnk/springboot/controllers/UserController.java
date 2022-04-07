@@ -5,6 +5,7 @@ import com.nnk.springboot.dto.user.UserAddDto;
 import com.nnk.springboot.dto.user.UserUpdateDto;
 import com.nnk.springboot.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,7 @@ public class UserController {
      * @return user list page
      */
     @RequestMapping("/user/list")
+    @PreAuthorize("hasRole('ADMIN')")
     public String home(Model model)
     {
         model.addAttribute("users", userService.getAllUserList());
@@ -42,8 +44,8 @@ public class UserController {
      * @return add user page
      */
     @GetMapping("/user/add")
-    public String addUser(@AuthenticationPrincipal CustomUserDetails customUserDetails, @ModelAttribute("user") UserAddDto user) {
-        if(customUserDetails != null && customUserDetails.getAuthorities().stream().anyMatch(i -> "USER".equals(i.getAuthority()))) return "redirect:/home"; // If role is USER, return Home page
+    @PreAuthorize("isAnonymous() or hasRole('ADMIN')")
+    public String addUser(@ModelAttribute("user") UserAddDto user) {
         return "user/add";
     }
 
@@ -55,8 +57,8 @@ public class UserController {
      * @return add user page or user list page
      */
     @PostMapping("/user/validate")
+    @PreAuthorize("isAnonymous() or hasRole('ADMIN')")
     public String validate(@AuthenticationPrincipal CustomUserDetails customUserDetails, @Validated @ModelAttribute("user") UserAddDto user, BindingResult result, Model model) {
-        if(customUserDetails != null && customUserDetails.getAuthorities().stream().anyMatch(i -> "USER".equals(i.getAuthority()))) return "redirect:/home"; // If role is USER, return Home page
         if (result.hasErrors()) return "user/add";
         try {
             userService.save(user.toEntity());
@@ -75,6 +77,7 @@ public class UserController {
      * @return update user page or user list page
      */
     @GetMapping("/user/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try {
             model.addAttribute("id", id);
@@ -94,6 +97,7 @@ public class UserController {
      * @return update user page or user list page
      */
     @PostMapping("/user/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateUser(@PathVariable("id") Integer id, @Validated @ModelAttribute("user") UserUpdateDto user,
                              BindingResult result, Model model) {
         if (result.hasErrors()) return "user/update";
@@ -112,6 +116,7 @@ public class UserController {
      * @return user list page
      */
     @GetMapping("/user/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteUser(@PathVariable("id") Integer id) {
         userService.delete(id);
         return "redirect:/user/list";

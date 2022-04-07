@@ -40,7 +40,7 @@ public class UserControllerTest {
     @WithMockCustomUser(role = Role.ADMIN)
     public void validateTest() throws Exception {
         //given
-        UserAddDto dto = UserAddDto.builder().username("user1").password("aaa").fullname("A a").role(Role.USER).build();
+        UserAddDto dto = UserAddDto.builder().username("user1").password("!Wow12345678").fullname("A a").role(Role.USER).build();
 
         User user = dto.toEntity();
 
@@ -65,11 +65,11 @@ public class UserControllerTest {
 
         //then
         mockMvc.perform(post("/user/validate")
-                        .param("username", " ")
+                        .param("username", "GITHUB_T")
                         .param("password", "")
                         .param("fullname", " ")
                         .param("role", "USER"))
-                .andExpect(model().attributeErrorCount("user", 3));
+                .andExpect(model().attributeErrorCount("user", 9));
     }
 
     @Test
@@ -81,9 +81,9 @@ public class UserControllerTest {
 
         //then
         mockMvc.perform(post("/user/validate")
-                        .param("username", " ")
-                        .param("password", "")
-                        .param("fullname", " ")
+                        .param("username", "useruser")
+                        .param("password", "!Owow123123")
+                        .param("fullname", "fulllne")
                         .param("role", "DD"))
                 .andExpect(model().attributeErrorCount("user", 1));
     }
@@ -135,7 +135,7 @@ public class UserControllerTest {
         mockMvc.perform(post("/user/update/" + id)
                 .param("username", dto.getUsername())
                 .param("fullname", dto.getFullname())
-                .param("password", "111")
+                .param("password", "!Wow123456")
                 .param("role", dto.getRole().toString()))
                 .andExpect(redirectedUrl("/user/list"));
     }
@@ -156,7 +156,7 @@ public class UserControllerTest {
         mockMvc.perform(post("/user/update/" + id)
                         .param("username", dto.getUsername())
                         .param("fullname", dto.getFullname())
-                        .param("password", "111")
+                        .param("password", "!Wow11234567")
                         .param("role", dto.getRole().toString()))
                 .andExpect(redirectedUrl("/user/list"));
     }
