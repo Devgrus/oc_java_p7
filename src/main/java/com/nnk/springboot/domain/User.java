@@ -21,7 +21,6 @@ public class User {
     @Column(unique = true)
     private String username;
 
-    @NotBlank(message = "Password is mandatory")
     private String password;
 
     @NotBlank(message = "FullName is mandatory")
@@ -30,4 +29,7 @@ public class User {
     @NotNull(message = "Role is mandatory")
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
 }

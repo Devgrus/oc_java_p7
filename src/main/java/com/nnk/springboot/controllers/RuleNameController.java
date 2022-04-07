@@ -4,6 +4,7 @@ import com.nnk.springboot.dto.ruleName.RuleNameAddDto;
 import com.nnk.springboot.dto.ruleName.RuleNameUpdateDto;
 import com.nnk.springboot.services.RuleNameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,6 +41,7 @@ public class RuleNameController {
      * @return add rule name page
      */
     @GetMapping("/ruleName/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public String addRuleForm(@ModelAttribute("ruleName") RuleNameAddDto ruleName) {
         return "ruleName/add";
     }
@@ -52,6 +54,7 @@ public class RuleNameController {
      * @return Add rule name page or rule name list page
      */
     @PostMapping("/ruleName/validate")
+    @PreAuthorize("hasRole('ADMIN')")
     public String validate(@Validated @ModelAttribute("ruleName") RuleNameAddDto ruleName, BindingResult result, Model model) {
         if(result.hasErrors()) return "ruleName/add";
         ruleNameService.save(ruleName.toEntity());
@@ -65,6 +68,7 @@ public class RuleNameController {
      * @return update rule name page or rule name list page
      */
     @GetMapping("/ruleName/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try {
             model.addAttribute("id", id.toString());
@@ -84,6 +88,7 @@ public class RuleNameController {
      * @return update rule name page or rule name list page
      */
     @PostMapping("/ruleName/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateRuleName(@PathVariable("id") Integer id, @Validated @ModelAttribute("ruleName") RuleNameUpdateDto ruleName,
                                  BindingResult result, Model model) {
         if(result.hasErrors()) return "ruleName/update";
@@ -101,6 +106,7 @@ public class RuleNameController {
      * @return rule name list page
      */
     @GetMapping("/ruleName/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteRuleName(@PathVariable("id") Integer id) {
         ruleNameService.delete(id);
         return "redirect:/ruleName/list";

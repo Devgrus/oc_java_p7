@@ -1,5 +1,6 @@
 package com.nnk.springboot.dto.user;
 
+import com.nnk.springboot.domain.Provider;
 import com.nnk.springboot.domain.Role;
 import com.nnk.springboot.domain.User;
 import lombok.*;
@@ -30,6 +31,7 @@ public class UserAddDto {
                 .password(password)
                 .fullname(fullname)
                 .role(role)
+                .provider(Provider.LOCAL)
                 .build();
     }
 }

@@ -5,6 +5,7 @@ import com.nnk.springboot.dto.rating.RatingAddDto;
 import com.nnk.springboot.dto.rating.RatingUpdateDto;
 import com.nnk.springboot.services.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,6 +43,7 @@ public class RatingController {
      * @return add rating page
      */
     @GetMapping("/rating/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public String addRatingForm(@ModelAttribute("rating") RatingAddDto rating) {
         return "rating/add";
     }
@@ -54,6 +56,7 @@ public class RatingController {
      * @return Add rating page or rating list page
      */
     @PostMapping("/rating/validate")
+    @PreAuthorize("hasRole('ADMIN')")
     public String validate(@Validated @ModelAttribute("rating") RatingAddDto rating, BindingResult result, Model model) {
         if(result.hasErrors()) return "/rating/add";
         ratingService.save(rating.toEntity());
@@ -67,6 +70,7 @@ public class RatingController {
      * @return update rating page or rating list page
      */
     @GetMapping("/rating/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try {
             model.addAttribute("id", id.toString());
@@ -86,6 +90,7 @@ public class RatingController {
      * @return Update rating page or rating list page
      */
     @PostMapping("/rating/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateRating(@PathVariable("id") Integer id, @Validated @ModelAttribute("rating") RatingUpdateDto rating,
                                BindingResult result, Model model) {
         if(result.hasErrors()) return "rating/update";
@@ -103,6 +108,7 @@ public class RatingController {
      * @return rating list page
      */
     @GetMapping("/rating/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteRating(@PathVariable("id") Integer id) {
         ratingService.delete(id);
         return "redirect:/rating/list";

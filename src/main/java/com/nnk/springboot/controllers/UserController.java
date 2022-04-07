@@ -1,16 +1,17 @@
 package com.nnk.springboot.controllers;
 
+import com.nnk.springboot.config.auth.CustomUserDetails;
 import com.nnk.springboot.dto.user.UserAddDto;
 import com.nnk.springboot.dto.user.UserUpdateDto;
 import com.nnk.springboot.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.NoSuchElementException;
 
 @Controller
@@ -41,7 +42,8 @@ public class UserController {
      * @return add user page
      */
     @GetMapping("/user/add")
-    public String addUser(@ModelAttribute("user") UserAddDto user) {
+    public String addUser(@AuthenticationPrincipal CustomUserDetails customUserDetails, @ModelAttribute("user") UserAddDto user) {
+        if(customUserDetails != null && customUserDetails.getAuthorities().stream().anyMatch(i -> "USER".equals(i.getAuthority()))) return "redirect:/home"; // If role is USER, return Home page
         return "user/add";
     }
 
@@ -53,9 +55,16 @@ public class UserController {
      * @return add user page or user list page
      */
     @PostMapping("/user/validate")
-    public String validate(@Validated @ModelAttribute("user") UserAddDto user, BindingResult result, Model model) {
+    public String validate(@AuthenticationPrincipal CustomUserDetails customUserDetails, @Validated @ModelAttribute("user") UserAddDto user, BindingResult result, Model model) {
+        if(customUserDetails != null && customUserDetails.getAuthorities().stream().anyMatch(i -> "USER".equals(i.getAuthority()))) return "redirect:/home"; // If role is USER, return Home page
         if (result.hasErrors()) return "user/add";
-        userService.save(user.toEntity());
+        try {
+            userService.save(user.toEntity());
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "user/add";
+        }
+        if(customUserDetails == null) return "redirect:/login";
         return "redirect:/user/list";
     }
 
@@ -85,7 +94,7 @@ public class UserController {
      * @return update user page or user list page
      */
     @PostMapping("/user/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid @ModelAttribute("user") UserUpdateDto user,
+    public String updateUser(@PathVariable("id") Integer id, @Validated @ModelAttribute("user") UserUpdateDto user,
                              BindingResult result, Model model) {
         if (result.hasErrors()) return "user/update";
         try {

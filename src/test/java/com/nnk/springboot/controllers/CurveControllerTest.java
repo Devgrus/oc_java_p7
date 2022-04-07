@@ -1,6 +1,10 @@
 package com.nnk.springboot.controllers;
 
+import com.nnk.springboot.config.WithMockCustomUser;
+import com.nnk.springboot.config.auth.CustomUserDetailsService;
+import com.nnk.springboot.config.oauth.CustomOauth2UserService;
 import com.nnk.springboot.domain.CurvePoint;
+import com.nnk.springboot.domain.Role;
 import com.nnk.springboot.dto.curvePoint.CurvePointAddDto;
 import com.nnk.springboot.dto.curvePoint.CurvePointUpdateDto;
 import com.nnk.springboot.services.CurvePointService;
@@ -23,7 +27,14 @@ public class CurveControllerTest {
     @MockBean
     CurvePointService curvePointService;
 
+    @MockBean
+    CustomUserDetailsService customUserDetailsService;
+
+    @MockBean
+    CustomOauth2UserService customOauth2UserService;
+
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTest() throws Exception {
         //given
         CurvePointAddDto dto = CurvePointAddDto.builder()
@@ -45,6 +56,7 @@ public class CurveControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTestCurveIdIsNotInteger() throws Exception {
         //given
 
@@ -59,6 +71,7 @@ public class CurveControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTestTermIsNotNumber() throws Exception {
         //given
 
@@ -73,6 +86,7 @@ public class CurveControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTestValueIsNotNumber() throws Exception {
         //given
 
@@ -87,6 +101,7 @@ public class CurveControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateCurveTest() throws Exception {
         //given
         Integer id = 1;
@@ -103,6 +118,7 @@ public class CurveControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateCurveTestCurveIdIsNotInteger() throws Exception {
         //given
 
@@ -117,6 +133,7 @@ public class CurveControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateCurveTestTermIsNotNumber() throws Exception {
         //given
 
@@ -131,6 +148,7 @@ public class CurveControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateCurveTestValueIsNotNumber() throws Exception {
         //given
 
@@ -145,6 +163,7 @@ public class CurveControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void deleteCurveTest() throws Exception {
         //given
         Integer id = 1;

@@ -4,6 +4,7 @@ import com.nnk.springboot.dto.bid.BidAddDto;
 import com.nnk.springboot.dto.bid.BidUpdateDto;
 import com.nnk.springboot.services.BidListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,6 +44,7 @@ public class BidListController {
      * @return Add bid page
      */
     @GetMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public String addBidForm(@ModelAttribute("bid") BidAddDto bid) {
         return "bidList/add";
     }
@@ -55,6 +57,7 @@ public class BidListController {
      * @return Add bid page or bid list page
      */
     @PostMapping("/validate")
+    @PreAuthorize("hasRole('ADMIN')")
     public String validate(@Validated @ModelAttribute("bid") BidAddDto bid, BindingResult result, Model model) {
         if(result.hasErrors()) {
             return "bidList/add";
@@ -71,6 +74,7 @@ public class BidListController {
      * @return update bid page or bid list page
      */
     @GetMapping("/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try {
             model.addAttribute("id", id.toString());
@@ -90,6 +94,7 @@ public class BidListController {
      * @return bid list page or bid update page
      */
     @PostMapping("/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateBid(@PathVariable("id") Integer id, @Validated @ModelAttribute("bid") BidUpdateDto bid,
                             BindingResult result, Model model) {
         if(result.hasErrors()) {
@@ -111,6 +116,7 @@ public class BidListController {
      * @return bid list page
      */
     @GetMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteBid(@PathVariable("id") Integer id) {
         bidListService.delete(id);
         return "redirect:/bidList/list";

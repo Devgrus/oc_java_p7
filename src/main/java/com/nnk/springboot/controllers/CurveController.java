@@ -5,6 +5,7 @@ import com.nnk.springboot.dto.curvePoint.CurvePointAddDto;
 import com.nnk.springboot.dto.curvePoint.CurvePointUpdateDto;
 import com.nnk.springboot.services.CurvePointService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,6 +42,7 @@ public class CurveController {
      * @return Add curve point page
      */
     @GetMapping("/curvePoint/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public String addCurveForm(@ModelAttribute("curvePoint") CurvePointAddDto curvePoint) {
         return "curvePoint/add";
     }
@@ -53,6 +55,7 @@ public class CurveController {
      * @return Add curve point page or curve point list page
      */
     @PostMapping("/curvePoint/validate")
+    @PreAuthorize("hasRole('ADMIN')")
     public String validate(@Validated @ModelAttribute("curvePoint") CurvePointAddDto curvePoint, BindingResult result, Model model) {
         if(result.hasErrors()) {
             return "curvePoint/add";
@@ -69,6 +72,7 @@ public class CurveController {
      * @return update curve point page or curve point list page
      */
     @GetMapping("/curvePoint/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try {
             model.addAttribute("id", id.toString());
@@ -88,6 +92,7 @@ public class CurveController {
      * @return Update curve point page or curve point list page
      */
     @PostMapping("/curvePoint/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateCurve(@PathVariable("id") Integer id, @Validated @ModelAttribute("curvePoint") CurvePointUpdateDto curvePoint,
                             BindingResult result, Model model) {
         if(result.hasErrors()) return "curvePoint/update";
@@ -105,6 +110,7 @@ public class CurveController {
      * @return curve point list page
      */
     @GetMapping("/curvePoint/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteCurve(@PathVariable("id") Integer id) {
         curvePointService.delete(id);
         return "redirect:/curvePoint/list";

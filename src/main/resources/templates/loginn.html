@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" >
+</head>
+<body>
+    <main class="form-signin">
+        <form class="border rounded-3 p-2 p-lg-5" method="post" action="/login">
+            <span class="fs-4 text-white color-primary rounded p-2">Poseidon</span>
+            <h1 class="h3 my-3 font-weight-normal">Sign in</h1>
+            <a th:href="@{/oauth2/authorization/github}">Login with GitHub</a>
+            <div class="form-floating mb-3">
+                <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+                <label for="username">Username</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+                <label for="password">Password</label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Login</button>
+        </form>
+        <div class="m-3">
+            <p class="m-0">Don't have an account ?</p>
+<!--            <a th:href="@{/signup}">Sign up</a>-->
+        </div>
+    </main>
+</body>
+</html>

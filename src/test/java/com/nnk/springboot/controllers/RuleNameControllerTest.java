@@ -1,5 +1,9 @@
 package com.nnk.springboot.controllers;
 
+import com.nnk.springboot.config.WithMockCustomUser;
+import com.nnk.springboot.config.auth.CustomUserDetailsService;
+import com.nnk.springboot.config.oauth.CustomOauth2UserService;
+import com.nnk.springboot.domain.Role;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.dto.ruleName.RuleNameAddDto;
 import com.nnk.springboot.dto.ruleName.RuleNameUpdateDto;
@@ -17,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.mockito.Mockito.*;
 
 @WebMvcTest(RuleNameController.class)
+
 public class RuleNameControllerTest {
 
     @Autowired
@@ -25,7 +30,14 @@ public class RuleNameControllerTest {
     @MockBean
     RuleNameService ruleNameService;
 
+    @MockBean
+    CustomUserDetailsService customUserDetailsService;
+
+    @MockBean
+    CustomOauth2UserService customOauth2UserService;
+
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTest() throws Exception {
         //given
         RuleNameAddDto dto = RuleNameAddDto.builder()
@@ -48,6 +60,7 @@ public class RuleNameControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTestNameIsNull() throws Exception {
         //given
         RuleNameAddDto dto = RuleNameAddDto.builder()
@@ -69,6 +82,7 @@ public class RuleNameControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void showUpdateFormTest() throws Exception {
         //given
         Integer id = 1;
@@ -84,6 +98,7 @@ public class RuleNameControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void showUpdateFormTestIdNotFound() throws Exception {
         //given
         Integer id = 1;
@@ -97,6 +112,7 @@ public class RuleNameControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateRuleNameTest() throws Exception {
         //given
         int id = 1;
@@ -118,6 +134,7 @@ public class RuleNameControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateRuleNameTestIdNotFound() throws Exception {
         //given
         Integer id = 1;
@@ -139,6 +156,7 @@ public class RuleNameControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void deleteRuleNameTest() throws Exception {
         //given
         Integer id = 1;

@@ -1,6 +1,10 @@
 package com.nnk.springboot.controllers;
 
+import com.nnk.springboot.config.WithMockCustomUser;
+import com.nnk.springboot.config.auth.CustomUserDetailsService;
+import com.nnk.springboot.config.oauth.CustomOauth2UserService;
 import com.nnk.springboot.domain.Rating;
+import com.nnk.springboot.domain.Role;
 import com.nnk.springboot.dto.rating.RatingAddDto;
 import com.nnk.springboot.dto.rating.RatingUpdateDto;
 import com.nnk.springboot.services.RatingService;
@@ -23,7 +27,14 @@ public class RatingControllerTest {
     @MockBean
     RatingService ratingService;
 
+    @MockBean
+    CustomUserDetailsService customUserDetailsService;
+
+    @MockBean
+    CustomOauth2UserService customOauth2UserService;
+
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTest() throws Exception {
         //given
         RatingAddDto dto = RatingAddDto.builder()
@@ -48,6 +59,7 @@ public class RatingControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTestOrderNumberIsNotNumber() throws Exception {
         //given
         RatingAddDto dto = RatingAddDto.builder()
@@ -72,6 +84,7 @@ public class RatingControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateRatingTest() throws Exception {
         //given
         int id = 1;
@@ -94,6 +107,7 @@ public class RatingControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateRatingTestOrderNumberIsNull() throws Exception {
         //given
         int id = 1;

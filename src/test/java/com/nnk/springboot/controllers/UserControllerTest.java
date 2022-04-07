@@ -1,5 +1,8 @@
 package com.nnk.springboot.controllers;
 
+import com.nnk.springboot.config.WithMockCustomUser;
+import com.nnk.springboot.config.auth.CustomUserDetailsService;
+import com.nnk.springboot.config.oauth.CustomOauth2UserService;
 import com.nnk.springboot.domain.Role;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.user.UserAddDto;
@@ -9,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.NoSuchElementException;
@@ -26,10 +30,17 @@ public class UserControllerTest {
     @MockBean
     UserService userService;
 
+    @MockBean
+    CustomUserDetailsService customUserDetailsService;
+
+    @MockBean
+    CustomOauth2UserService customOauth2UserService;
+
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTest() throws Exception {
         //given
-        UserAddDto dto = UserAddDto.builder().username("User").password("aaa").fullname("A a").role(Role.USER).build();
+        UserAddDto dto = UserAddDto.builder().username("user1").password("aaa").fullname("A a").role(Role.USER).build();
 
         User user = dto.toEntity();
 
@@ -46,6 +57,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTestWithWrongValues() throws Exception {
         //given
 
@@ -61,6 +73,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTestWithWrongRoleValue() throws Exception {
         //given
 
@@ -76,6 +89,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void showUpdateFormTest() throws Exception {
         //given
         Integer id = 1;
@@ -92,6 +106,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void showUpdateFormTestIdNotFound() throws Exception {
         //given
         Integer id = 1;
@@ -105,6 +120,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateUserTest() throws Exception {
         //given
         int id = 1;
@@ -125,6 +141,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateUserTestIdNotFound() throws Exception {
         //given
         Integer id = 1;
@@ -145,6 +162,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void deleteUserTest() throws Exception {
         //given
         Integer id = 1;

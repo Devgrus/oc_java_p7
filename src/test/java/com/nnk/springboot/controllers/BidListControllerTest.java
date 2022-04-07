@@ -1,6 +1,10 @@
 package com.nnk.springboot.controllers;
 
+import com.nnk.springboot.config.WithMockCustomUser;
+import com.nnk.springboot.config.auth.CustomUserDetailsService;
+import com.nnk.springboot.config.oauth.CustomOauth2UserService;
 import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.domain.Role;
 import com.nnk.springboot.dto.bid.BidAddDto;
 import com.nnk.springboot.dto.bid.BidUpdateDto;
 import com.nnk.springboot.services.BidListService;
@@ -27,7 +31,14 @@ public class BidListControllerTest {
     @MockBean
     BidListService bidListService;
 
+    @MockBean
+    CustomUserDetailsService customUserDetailsService;
+
+    @MockBean
+    CustomOauth2UserService customOauth2UserService;
+
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTest() throws Exception {
         //given
         BidAddDto bidAddDto = BidAddDto.builder()
@@ -54,6 +65,7 @@ public class BidListControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTestAccountCharactersGreaterThan30() throws Exception {
         //given
 
@@ -68,6 +80,7 @@ public class BidListControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTestTypeCharactersGreaterThan30() throws Exception {
         //given
 
@@ -82,6 +95,7 @@ public class BidListControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTestBidQuantityIsNotNumber() throws Exception {
         //given
 
@@ -96,6 +110,7 @@ public class BidListControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void showUpdateFormTest() throws Exception {
         //given
         BidList bidList = BidList.builder()
@@ -121,6 +136,7 @@ public class BidListControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void showUpdateFormTestBidListIdNotFound() throws Exception {
         //given
 
@@ -134,6 +150,7 @@ public class BidListControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateBidTest() throws Exception {
         //given
         int id = 1;
@@ -156,6 +173,7 @@ public class BidListControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateBidTestAccountCharactersGreaterThan30() throws Exception {
         //given
 
@@ -170,6 +188,7 @@ public class BidListControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateBidTestTypeCharactersGreaterThan30() throws Exception {
         //given
 
@@ -184,6 +203,7 @@ public class BidListControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateBidTestBidQuantityIsNotNumber() throws Exception {
         //given
 
@@ -198,6 +218,7 @@ public class BidListControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void deleteBidTest() throws Exception {
         //given
         Integer id = 1;

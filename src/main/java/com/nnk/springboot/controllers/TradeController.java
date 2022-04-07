@@ -5,6 +5,7 @@ import com.nnk.springboot.dto.trade.TradeAddDto;
 import com.nnk.springboot.dto.trade.TradeUpdateDto;
 import com.nnk.springboot.services.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,6 +42,7 @@ public class TradeController {
      * @return add trade page
      */
     @GetMapping("/trade/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public String addTradeForm(@ModelAttribute("trade") TradeAddDto trade) {
         return "trade/add";
     }
@@ -53,6 +55,7 @@ public class TradeController {
      * @return add trade page or trade list page
      */
     @PostMapping("/trade/validate")
+    @PreAuthorize("hasRole('ADMIN')")
     public String validate(@Validated @ModelAttribute("trade") TradeAddDto trade, BindingResult result, Model model) {
         if(result.hasErrors()) return "trade/add";
         tradeService.save(trade.toEntity());
@@ -66,6 +69,7 @@ public class TradeController {
      * @return update trade page or trade list page
      */
     @GetMapping("/trade/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try {
             model.addAttribute("id", id);
@@ -85,6 +89,7 @@ public class TradeController {
      * @return update trade page or trade list page
      */
     @PostMapping("/trade/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateTrade(@PathVariable("id") Integer id, @Validated @ModelAttribute("trade")TradeUpdateDto trade,
                               BindingResult result, Model model) {
         if(result.hasErrors()) return "trade/update";
@@ -102,6 +107,7 @@ public class TradeController {
      * @return trade list page
      */
     @GetMapping("/trade/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteTrade(@PathVariable("id") Integer id) {
         tradeService.delete(id);
         return "redirect:/trade/list";

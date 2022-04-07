@@ -1,5 +1,9 @@
 package com.nnk.springboot.controllers;
 
+import com.nnk.springboot.config.WithMockCustomUser;
+import com.nnk.springboot.config.auth.CustomUserDetailsService;
+import com.nnk.springboot.config.oauth.CustomOauth2UserService;
+import com.nnk.springboot.domain.Role;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.dto.trade.TradeAddDto;
 import com.nnk.springboot.dto.trade.TradeUpdateDto;
@@ -25,7 +29,14 @@ public class TradeControllerTest {
     @MockBean
     TradeService tradeService;
 
+    @MockBean
+    CustomUserDetailsService customUserDetailsService;
+
+    @MockBean
+    CustomOauth2UserService customOauth2UserService;
+
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTest() throws Exception {
         //given
         TradeAddDto dto = TradeAddDto.builder()
@@ -45,6 +56,7 @@ public class TradeControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void validateTestAccountAndTypeAreBlank() throws Exception {
         //given
         TradeAddDto dto = TradeAddDto.builder()
@@ -61,6 +73,7 @@ public class TradeControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void showUpdateFormTest() throws Exception {
         //given
         Integer id = 1;
@@ -76,6 +89,7 @@ public class TradeControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void showUpdateFormTestIdNotFound() throws Exception {
         //given
         Integer id = 1;
@@ -89,6 +103,7 @@ public class TradeControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateTradeTest() throws Exception {
         //given
         int id = 1;
@@ -107,6 +122,7 @@ public class TradeControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void updateTradeTestIdNotFound() throws Exception {
         //given
         int id = 1;
@@ -125,6 +141,7 @@ public class TradeControllerTest {
     }
 
     @Test
+    @WithMockCustomUser(role = Role.ADMIN)
     public void deleteTradeTest() throws Exception {
         //given
         Integer id = 1;
