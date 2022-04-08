@@ -41,7 +41,7 @@ public class TradeService {
         List<TradeListDto> dto = new ArrayList<>();
         tradeRepository.findAll().forEach(trade ->
                 dto.add(TradeListDto.builder()
-                        .id(trade.getTradeId())
+                        .id(trade.getId())
                         .account(trade.getAccount())
                         .type(trade.getType())
                         .buyQuantity(trade.getBuyQuantity())

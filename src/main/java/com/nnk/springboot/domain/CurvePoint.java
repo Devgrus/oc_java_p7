@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "CurvePoint")
+@Table(name = "curve_point")
 @Getter
 @Setter
 @NoArgsConstructor

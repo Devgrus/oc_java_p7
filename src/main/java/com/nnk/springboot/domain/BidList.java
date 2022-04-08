@@ -6,7 +6,7 @@ import javax.validation.constraints.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "BidList")
+@Table(name = "bid_list")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 public class BidList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer bidListId;
+    private Integer id;
 
     @NotBlank(message = "Account is mandatory")
     @Size(max = 30)

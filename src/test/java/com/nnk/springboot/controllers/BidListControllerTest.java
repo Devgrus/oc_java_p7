@@ -114,7 +114,7 @@ public class BidListControllerTest {
     public void showUpdateFormTest() throws Exception {
         //given
         BidList bidList = BidList.builder()
-                .bidListId(1)
+                .id(1)
                 .account("AccountTest")
                 .type("TypeTest")
                 .bidQuantity(5d)

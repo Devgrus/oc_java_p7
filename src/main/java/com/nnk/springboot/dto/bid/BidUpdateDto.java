@@ -26,7 +26,7 @@ public class BidUpdateDto {
 
     public BidList toEntity(Integer id) {
         return BidList.builder()
-                .bidListId(id)
+                .id(id)
                 .account(account)
                 .type(type)
                 .bidQuantity(bidQuantity)

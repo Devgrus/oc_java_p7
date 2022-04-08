@@ -30,10 +30,10 @@ public class BidListServiceTest {
         Integer id = 1;
 
         //when
-        when(bidListRepository.findByBidListId(id)).thenReturn(bidList);
+        when(bidListRepository.findById(id)).thenReturn(bidList);
 
         //then
-        assertThat(bidListService.findByBidListId(id)).isEqualTo(bidList.get());
+        assertThat(bidListService.findById(id)).isEqualTo(bidList.get());
     }
 
     @Test
@@ -42,28 +42,28 @@ public class BidListServiceTest {
         Integer id = 1;
 
         //when
-        when(bidListRepository.findByBidListId(id)).thenReturn(Optional.empty());
+        when(bidListRepository.findById(id)).thenReturn(Optional.empty());
 
         //then
-        assertThatThrownBy(()->bidListService.findByBidListId(id)).hasMessage("ID NOT FOUND");
+        assertThatThrownBy(()->bidListService.findById(id)).hasMessage("ID NOT FOUND");
     }
 
     @Test
     public void getBidUpdateFormDataTest() {
         //given
         BidList bidList = BidList.builder()
-                .bidListId(1)
+                .id(1)
                 .account("A")
                 .type("T")
                 .bidQuantity(2d)
                 .build();
         //when
-        when(bidListRepository.findByBidListId(bidList.getBidListId())).thenReturn(Optional.of(bidList));
+        when(bidListRepository.findById(bidList.getId())).thenReturn(Optional.of(bidList));
 
         //then
-        assertThat(bidListService.getBidUpdateFormData(bidList.getBidListId()).getAccount()).isEqualTo(bidList.getAccount());
-        assertThat(bidListService.getBidUpdateFormData(bidList.getBidListId()).getType()).isEqualTo(bidList.getType());
-        assertThat(bidListService.getBidUpdateFormData(bidList.getBidListId()).getBidQuantity()).isEqualTo(bidList.getBidQuantity());
+        assertThat(bidListService.getBidUpdateFormData(bidList.getId()).getAccount()).isEqualTo(bidList.getAccount());
+        assertThat(bidListService.getBidUpdateFormData(bidList.getId()).getType()).isEqualTo(bidList.getType());
+        assertThat(bidListService.getBidUpdateFormData(bidList.getId()).getBidQuantity()).isEqualTo(bidList.getBidQuantity());
     }
 
     @Test
@@ -71,7 +71,7 @@ public class BidListServiceTest {
         //given
         Integer id = 1;
         //when
-        when(bidListRepository.findByBidListId(id)).thenReturn(Optional.empty());
+        when(bidListRepository.findById(id)).thenReturn(Optional.empty());
 
         //then
         assertThatThrownBy(()->bidListService.getBidUpdateFormData(id)).hasMessage("ID NOT FOUND");
@@ -81,7 +81,7 @@ public class BidListServiceTest {
     public void updateTest() {
         //given
         BidList bidList = BidList.builder()
-                .bidListId(1)
+                .id(1)
                 .account("A")
                 .type("T")
                 .bidQuantity(2d)
@@ -93,8 +93,8 @@ public class BidListServiceTest {
                 .bidQuantity(5d)
                 .build();
         //when
-        when(bidListRepository.findByBidListId(bidList.getBidListId())).thenReturn(Optional.of(bidList));
-        bidListService.update(bidList.getBidListId(), dto);
+        when(bidListRepository.findById(bidList.getId())).thenReturn(Optional.of(bidList));
+        bidListService.update(bidList.getId(), dto);
 
         //then
         assertThat(bidList.getAccount()).isEqualTo(dto.getAccount());
@@ -113,7 +113,7 @@ public class BidListServiceTest {
                 .bidQuantity(5d)
                 .build();
         //when
-        when(bidListRepository.findByBidListId(id)).thenReturn(Optional.empty());
+        when(bidListRepository.findById(id)).thenReturn(Optional.empty());
 
         //then
         assertThatThrownBy(()->bidListService.update(id, dto)).hasMessage("ID NOT FOUND");

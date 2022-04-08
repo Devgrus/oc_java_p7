@@ -6,7 +6,7 @@ import javax.validation.constraints.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "Trade")
+@Table(name = "trade")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 public class Trade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer tradeId;
+    private Integer id;
 
     @NotBlank(message = "Account is mandatory")
     @Size(max = 30)

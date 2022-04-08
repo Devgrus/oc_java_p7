@@ -27,15 +27,15 @@ public class TradeServiceTest {
     public void getTradeUpdateFormDataTest() throws Exception {
         //given
         Trade trade = Trade.builder()
-                .tradeId(1).account("AA").type("aa").buyQuantity(5d).build();
+                .id(1).account("AA").type("aa").buyQuantity(5d).build();
 
         //when
-        when(tradeRepository.findById(trade.getTradeId())).thenReturn(Optional.of(trade));
+        when(tradeRepository.findById(trade.getId())).thenReturn(Optional.of(trade));
 
         //then
-        assertThat(tradeService.getTradeUpdateFormData(trade.getTradeId()).getAccount()).isEqualTo(trade.getAccount());
-        assertThat(tradeService.getTradeUpdateFormData(trade.getTradeId()).getType()).isEqualTo(trade.getType());
-        assertThat(tradeService.getTradeUpdateFormData(trade.getTradeId()).getBuyQuantity()).isEqualTo(trade.getBuyQuantity());
+        assertThat(tradeService.getTradeUpdateFormData(trade.getId()).getAccount()).isEqualTo(trade.getAccount());
+        assertThat(tradeService.getTradeUpdateFormData(trade.getId()).getType()).isEqualTo(trade.getType());
+        assertThat(tradeService.getTradeUpdateFormData(trade.getId()).getBuyQuantity()).isEqualTo(trade.getBuyQuantity());
     }
 
     @Test
@@ -54,14 +54,14 @@ public class TradeServiceTest {
     public void updateTest() throws Exception {
         //given
         Trade trade = Trade.builder()
-                .tradeId(1).account("AA").type("aa").buyQuantity(5d).build();
+                .id(1).account("AA").type("aa").buyQuantity(5d).build();
 
         TradeUpdateDto dto = TradeUpdateDto.builder()
                 .account("BB").type("bb").buyQuantity(6d).build();
 
         //when
-        when(tradeRepository.findById(trade.getTradeId())).thenReturn(Optional.of(trade));
-        tradeService.update(trade.getTradeId(), dto);
+        when(tradeRepository.findById(trade.getId())).thenReturn(Optional.of(trade));
+        tradeService.update(trade.getId(), dto);
 
         //then
         assertThat(trade.getAccount()).isEqualTo(dto.getAccount());

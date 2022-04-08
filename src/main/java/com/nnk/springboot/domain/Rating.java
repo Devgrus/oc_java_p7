@@ -6,7 +6,7 @@ import javax.validation.constraints.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "Rating")
+@Table(name = "rating")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,6 +21,7 @@ public class Rating {
     private String moodysRating;
 
     @Size(max = 125)
+    @Column(name = "sand_p_rating")
     private String sandPRating;
 
     @Size(max = 125)

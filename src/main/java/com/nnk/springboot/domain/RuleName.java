@@ -5,7 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
-@Table(name = "RuleName")
+@Table(name = "rule_name")
 @Getter
 @Setter
 @NoArgsConstructor

@@ -39,8 +39,8 @@ public class BidListService {
      * @return bidList
      */
     @Transactional
-    public BidList findByBidListId(Integer id) {
-        return bidListRepository.findByBidListId(id).orElseThrow(()-> new NoSuchElementException("ID NOT FOUND"));
+    public BidList findById(Integer id) {
+        return bidListRepository.findById(id).orElseThrow(()-> new NoSuchElementException("ID NOT FOUND"));
     }
 
     /**
@@ -51,7 +51,7 @@ public class BidListService {
         List<BidListDto> dto = new ArrayList<>();
         bidListRepository.findAll().forEach(bidList ->
                 dto.add(BidListDto.builder()
-                        .id(bidList.getBidListId())
+                        .id(bidList.getId())
                         .account(bidList.getAccount())
                         .type(bidList.getType())
                         .bidQuantity(bidList.getBidQuantity())
@@ -66,7 +66,7 @@ public class BidListService {
      */
     @Transactional
     public  BidUpdateDto getBidUpdateFormData(Integer id) {
-        BidList bidList = bidListRepository.findByBidListId(id).orElseThrow(()-> new NoSuchElementException("ID NOT FOUND"));
+        BidList bidList = bidListRepository.findById(id).orElseThrow(()-> new NoSuchElementException("ID NOT FOUND"));
         return BidUpdateDto.builder()
                 .account(bidList.getAccount())
                 .type(bidList.getType())
@@ -81,7 +81,7 @@ public class BidListService {
      */
     @Transactional
     public void update(Integer id, BidUpdateDto dto) {
-        BidList bidList = bidListRepository.findByBidListId(id).orElseThrow(()-> new NoSuchElementException("ID NOT FOUND"));
+        BidList bidList = bidListRepository.findById(id).orElseThrow(()-> new NoSuchElementException("ID NOT FOUND"));
         bidList.setAccount(dto.getAccount());
         bidList.setType(dto.getType());
         bidList.setBidQuantity(dto.getBidQuantity());
