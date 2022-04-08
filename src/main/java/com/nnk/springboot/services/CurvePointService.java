@@ -79,7 +79,7 @@ public class CurvePointService {
     /**
      * Delete curve point
      * @param id curve point id
-     * @throws Exception id not found in DB
+     * @throws RuntimeException id not found in DB
      */
     public void delete(Integer id) throws RuntimeException {
         curvePointRepository.deleteById(id);

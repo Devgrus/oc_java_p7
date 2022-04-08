@@ -51,6 +51,7 @@ public class UserController {
 
     /**
      * Validate a new user information and add user
+     * @param customUserDetails user details
      * @param user user information
      * @param result result of validation
      * @param model if result is false, it will have user and error message of validation
