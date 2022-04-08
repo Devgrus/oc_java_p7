@@ -61,6 +61,10 @@ public class RuleNameService {
         return RuleNameUpdateDto.builder()
                 .name(ruleName.getName())
                 .description(ruleName.getDescription())
+                .json(ruleName.getJson())
+                .template(ruleName.getTemplate())
+                .sqlStr(ruleName.getSqlStr())
+                .sqlPart(ruleName.getSqlPart())
                 .build();
     }
 
