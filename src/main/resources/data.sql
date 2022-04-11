@@ -1,2 +1,0 @@
-INSERT INTO Users(id, fullname, username, password, role, provider) VALUES(1, 'Administrator', 'admin', '$2a$10$SKZ1jcn.pRDV2Agzqtl8meQDLkfYKanCgFDyKBouvA3XXyRQmFBeO', 'ADMIN', 'LOCAL');
-INSERT INTO Users(id, fullname, username, password, role, provider) VALUES(2, 'User', 'user', '$2a$10$SKZ1jcn.pRDV2Agzqtl8meQDLkfYKanCgFDyKBouvA3XXyRQmFBeO', 'USER', 'LOCAL');
